@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "AlpariHelperExtension",
+  "version": "0.0.1",
+  "content_scripts": [
+    {
+      "js": [
+        "dist/app.js"
+      ],
+      "matches": [
+        "*://my.alpari.com/*",
+        "*://alpari.com/*",
+        "*://localhost:*/*"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": ["dist/background.js"]
+  },
+  "web_accessible_resources": [
+    "dist/*"
+  ]
+}
