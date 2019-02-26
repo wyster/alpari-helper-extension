@@ -1,4 +1,8 @@
-interface Item {
+import Vue from 'vue';
+import store from '@/store';
+import InvestItem from '@/InvestItem.vue';
+
+export interface Item {
     id: number;
     bonus: number;
 }
@@ -12,8 +16,17 @@ export function prepareList(items: Item[]) {
         if (!feature) {
             return;
         }
-        const newElement = document.createElement('div');
-        newElement.innerText = item.bonus.toString();
-        feature.appendChild(newElement);
+        const div = document.createElement('div');
+        feature.appendChild(div);
+
+        new Vue({
+            store,
+            render: (h) => h(
+                InvestItem,
+                {
+                    props: { item },
+                },
+            ),
+        }).$mount(div);
     });
 }
