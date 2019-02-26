@@ -1,25 +1,12 @@
 import Vue from 'vue';
-import Summary from '@/Summary.vue';
-import store from '@/store';
 import '@/request';
 import {prepareList} from '@/items';
 import {EventBus} from '@/event-bus';
+import '@/summary';
 
 Vue.config.productionTip = false;
 
-const div = document.createElement('div');
-div.setAttribute('id', 'alpari-ext-summary');
-const element = document.querySelector('[data-field-name="currencyButton"]');
-if (element) {
-  element.appendChild(div);
-
-  new Vue({
-    store,
-    render: (h) => h(Summary),
-  }).$mount('#alpari-ext-summary');
-}
-
-let config;
+let config: object|null = null;
 const configElement = document.querySelector('.config');
 if (configElement) {
   const configAttribute = configElement.getAttribute('data-config');
@@ -29,7 +16,7 @@ if (configElement) {
 }
 
 if (config !== null) {
-  prepareList(config.items);
+  prepareList((config as any).items);
 }
 
 EventBus.$on('response', (e: XMLHttpRequest) => {
