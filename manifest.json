@@ -8,8 +8,7 @@
         "dist/content/main.js"
       ],
       "matches": [
-        "*://my.alpari.com/*",
-        "*://alpari.com/*",
+        "*://my.alpari.com/*/investments/pamm_accounts/*",
         "*://localhost:*/*"
       ],
       "run_at": "document_idle"

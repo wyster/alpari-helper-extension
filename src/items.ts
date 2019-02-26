@@ -4,14 +4,26 @@ import InvestItem from '@/InvestItem.vue';
 
 export interface Item {
     id: number;
+    /**
+     * Бонус
+     */
     bonus: number;
+    /**
+     * Баланс
+     */
+    balance: number;
+    /**
+     * Чистый баланс без учёта бонусов и заработанного
+     */
+    balanceClear: number;
+    /**
+     * Доход за весь период
+     */
+    tradeResult: number;
 }
 
 export function prepareList(items: Item[]) {
     items.forEach((item: Item) => {
-        if (item.bonus === 0) {
-            return;
-        }
         const feature = document.querySelector(`.investment-account-list-item-${item.id} .feature`);
         if (!feature) {
             return;
