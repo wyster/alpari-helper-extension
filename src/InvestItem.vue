@@ -1,9 +1,9 @@
 <template>
   <div :class="$style.items">
-      <span title="Бонус" :class="$style.item">{{item.bonus}}</span>
-      <span title="Баланс" :class="$style.item">{{item.balance}}</span>
-      <span title="Чистый баланс" :class="$style.item">{{item.balanceClear}}</span>
-      <span title="Доход за весь период" :class="$style.item">{{item.tradeResult}}</span>
+      <span title="Бонус" :class="$style.item">{{item.bonus.toFixed(2)}}</span>
+      <span title="Баланс" :class="$style.item">{{item.balance.toFixed(2)}}</span>
+      <span title="Чистый баланс" :class="$style.item">{{item.balanceClear.toFixed(2)}}</span>
+      <span title="Доход за весь период" :class="$style.item">{{item.tradeResult.toFixed(2)}}</span>
   </div>
 </template>
 
