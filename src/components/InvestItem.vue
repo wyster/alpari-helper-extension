@@ -2,7 +2,7 @@
   <div :class="$style.items">
       <span title="Бонус" :class="$style.item">{{item.bonus.toFixed(2)}}</span>
       <span title="Баланс" :class="$style.item">{{item.balance.toFixed(2)}}</span>
-      <span title="Чистый баланс" :class="$style.item">{{item.balanceClear.toFixed(2)}}</span>
+      <span title="Чистый баланс" :class="$style.item">{{(item.balance - item.bonus).toFixed(2)}}</span>
       <span title="Доход за весь период" :class="$style.item">{{item.tradeResult.toFixed(2)}}</span>
   </div>
 </template>
@@ -21,10 +21,6 @@ export default class InvestItem extends Vue {
         },
     })
     public item!: Item[];
-
-    public created() {
-        console.log(this.item);
-    }
 }
 </script>
 

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import store from '@/store';
-import InvestItem from '@/InvestItem.vue';
+import InvestItem from '@/components/InvestItem.vue';
 
 export interface Item {
     id: number;
@@ -12,10 +12,6 @@ export interface Item {
      * Баланс
      */
     balance: number;
-    /**
-     * Чистый баланс без учёта бонусов и заработанного
-     */
-    balanceClear: number;
     /**
      * Доход за весь период
      */

@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { convertTextToObject } from './helper/summary';
+import { convertTextToObject } from '@/helper/summary';
 
 @Component({})
 export default class Summary extends Vue {

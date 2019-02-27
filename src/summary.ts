@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import store from '@/store';
-import Summary from '@/Summary.vue';
+import Summary from '@/components/Summary.vue';
 
 const accountTabs = document.querySelector('.account-tabs') as HTMLElement;
 
