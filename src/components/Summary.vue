@@ -11,6 +11,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { convertTextToObject } from '@/helper/summary';
+import * as Command from '@/consts/command';
 
 @Component({})
 export default class Summary extends Vue {
@@ -28,7 +29,10 @@ export default class Summary extends Vue {
             console.error('#investment-summary not found on page');
             return;
         }
-        console.log(convertTextToObject(this.investmentSummary.innerText));
+        window.postMessage({
+            command: Command.SAVE_INVEST_STATS,
+            data: convertTextToObject(this.investmentSummary.innerText),
+        }, '*');
         return;
     }
 }
