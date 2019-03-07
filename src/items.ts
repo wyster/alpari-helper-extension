@@ -2,6 +2,10 @@ import Vue from 'vue';
 import store from '@/store';
 import InvestItem from '@/components/InvestItem.vue';
 
+export interface PammAccount {
+    dateNextRolloverInput: string;
+}
+
 export interface Item {
     id: number;
     /**
@@ -16,11 +20,15 @@ export interface Item {
      * Доход за весь период
      */
     tradeResult: number;
+    /**
+     * Информация о памм счете
+     */
+    pammAccount: PammAccount;
 }
 
 export function prepareList(items: Item[]) {
     items.forEach((item: Item) => {
-        const feature = document.querySelector(`.investment-account-list-item-${item.id} .feature`);
+        const feature = document.querySelector(`.investment-account-list-item-${item.id}`);
         if (!feature) {
             return;
         }

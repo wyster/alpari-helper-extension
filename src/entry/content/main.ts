@@ -1,4 +1,6 @@
 import * as Command from '@/consts/command';
+import * as Storage from '@/consts/storage';
+import moment from 'moment';
 
 appendScriptSrc('dist/page/main.js');
 
@@ -15,7 +17,7 @@ function appendScriptSrc(src: string): Promise<any> {
 
 interface InvestStats {
     stats: object;
-    date: Date;
+    date: string;
     activeAccounts: object;
 }
 
@@ -30,16 +32,24 @@ window.addEventListener('message', async (message: MessageEvent) => {
         case Command.SAVE_INVEST_STATS:
             const preparedData: InvestStats = {
                 stats: message.data.data,
-                date: new Date(),
+                date: moment().format(),
                 activeAccounts: await getActiveAccounts(),
             };
-            chrome.storage.local.get(['investStats'], ({investStats: result}) => {
+            chrome.storage.local.get([Storage.INVEST_STATS], ({investStats: result}) => {
                 if (typeof result === 'undefined') {
                     result = [];
                 }
                 result.push(preparedData);
-                chrome.storage.local.set({investStats: result});
+                chrome.storage.local.set({[Storage.INVEST_STATS]: result});
             });
+            break;
+        case Command.OPEN_INVEST_STATS:
+            chrome.runtime.sendMessage({command: Command.OPEN_INVEST_STATS}, (response) => {
+                console.log(response);
+            });
+            break;
+        case Command.CLEAR_INVEST_STATS:
+            chrome.storage.local.set({[Storage.INVEST_STATS]: {}});
             break;
     }
 });

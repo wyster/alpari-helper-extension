@@ -10,6 +10,9 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "highcharts": "^7.0.3",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "vue": "^2.6.6",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
@@ -20,7 +23,10 @@
     "@commitlint/config-conventional": "^7.5.0",
     "@types/chai": "^4.1.0",
     "@types/chrome": "0.0.81",
+    "@types/highcharts": "^5.0.36",
+    "@types/lodash": "^4.14.122",
     "@types/mocha": "^5.2.4",
+    "@types/moment": "^2.13.0",
     "@vue/cli-plugin-babel": "^3.4.0",
     "@vue/cli-plugin-e2e-cypress": "^3.4.0",
     "@vue/cli-plugin-typescript": "^3.4.0",

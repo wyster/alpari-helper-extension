@@ -24,7 +24,7 @@ export class Summary {
      */
     public activeInvestments: number | undefined = undefined;
     /**
-     * Активных инвестиционных счетов
+     * Архивных инвестиционных счетов
      */
     public archivedInvestments: number | undefined = undefined;
 }
