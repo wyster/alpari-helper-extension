@@ -3,6 +3,13 @@ import store from '@/store';
 import InvestItem from '@/components/InvestItem.vue';
 
 export interface PammAccount {
+    /**
+     * Дата следующего ролловера на вывод
+     */
+    dateNextRollover: string;
+    /**
+     * Дата следующего ролловера на ввод
+     */
     dateNextRolloverInput: string;
 }
 

@@ -10,7 +10,7 @@
         <textarea :class="$style.textarea" name="data"></textarea>
         <input type="submit" />
       </form>
-      <textarea :class="$style.textarea">{{investStats}}</textarea>
+      <textarea :class="$style.textarea" v-model="investStats"></textarea>
       <!--<div
         v-for="(item, index) in investStats"
         :key="index"
