@@ -53,7 +53,7 @@ export default class InvestItem extends Vue {
     }
     .items2 {
         position: absolute;
-        top: 5px;
+        top: 0;
         right: 15px;
         opacity: 0.3;
 
