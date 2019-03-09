@@ -3,10 +3,16 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {
+interface RootState {
+  lastRollover: object | undefined;
+}
 
-  },
+const state: RootState = {
+  lastRollover: undefined,
+};
+
+export default new Vuex.Store({
+  state,
   mutations: {
 
   },

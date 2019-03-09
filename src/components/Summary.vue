@@ -13,6 +13,10 @@
       v-on:click="openStats">
       <span class="button__deco">Открыть статистику</span>
     </button>
+
+    <span v-if="typeof $store.state.lastRollover !== 'undefined'">
+      Последний ролловер: {{$store.state.lastRollover.format('DD.MM HH:mm')}}
+    </span>
   </div>
 </template>
 

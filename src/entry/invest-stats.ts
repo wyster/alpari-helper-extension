@@ -24,7 +24,7 @@ async function init() {
         },
 
         tooltip: {
-            // Тултип для всех 
+            // Тултип для всех
             shared: true,
         },
 
@@ -33,8 +33,11 @@ async function init() {
                 title: {
                     text: 'Кол-во',
                 },
-                max: Math.max(...map(stats, 'stats.archiveInvestmentCount'), ...map(stats, 'stats.archiveInvestmentCount')) * 3,
-            }, 
+                max: Math.max(
+                    ...map(stats, 'stats.archiveInvestmentCount'),
+                    ...map(stats, 'stats.archiveInvestmentCount'),
+                ) * 3,
+            },
             {
                 title: {
                     text: 'Баланс',
@@ -45,11 +48,11 @@ async function init() {
                     text: 'Прирост',
                 },
                 // Выводит справа
-                opposite: true
-            }
+                opposite: true,
+            },
         ],
 
-        series: [] as any
+        series: [] as any,
     };
 
     options.series.push(

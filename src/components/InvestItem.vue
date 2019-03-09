@@ -29,7 +29,7 @@ export default class InvestItem extends Vue {
     })
     public item!: Item[];
 
-    private formatDate (date: string) {
+    private formatDate(date: string) {
         const dateObject = moment(date);
         if (dateObject.isSame(new Date(), 'day')) {
             return dateObject.format('HH');
