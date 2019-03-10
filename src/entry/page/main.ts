@@ -20,6 +20,11 @@ window.addEventListener('message', async (message: MessageEvent) => {
   }
 });
 
+function detectNextRollover(v: any): moment.Moment {
+  // @todo типы
+  return moment(v.items[0].pammAccount.dateNextRolloverInput);
+}
+
 let config: object|null = null;
 const configElement = document.querySelector('.config');
 if (configElement) {
@@ -30,6 +35,9 @@ if (configElement) {
 }
 
 if (config !== null) {
+  store.state.nextRollover = detectNextRollover(config);
+  store.state.initDate = moment();
+
   window.postMessage({
     command: Command.INIT,
     data: {

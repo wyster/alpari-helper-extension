@@ -6,7 +6,6 @@ import nth from 'lodash/nth';
 
 interface GenericObject { [key: string]: any; }
 let config: GenericObject = {};
-let date = moment();
 
 appendScriptSrc('dist/page/main.js');
 
@@ -41,14 +40,14 @@ async function getActiveAccounts(): Promise<any> {
 async function getlastRollover(): Promise<any> {
     const id = config.items[0].id;
     const endDate = moment().format('DD-MM-YYYY');
-    const beforeDate = moment().subtract(1, 'day').format('DD-MM-YYYY');
+    const beforeDate = moment().subtract(7, 'day').format('DD-MM-YYYY');
     let url = 'https://my.alpari.com/ru/investor/pamm6/investment/hourly_monitoring/yield/';
     url += `${id}/${beforeDate}/${endDate}/`;
     const response: Response = await fetch(url);
     // @todo типы
     const data = await response.json();
     if (Array.isArray(data)) {
-        const lastDate = moment(last(data).date);
+        const lastDate = moment(nth(data, -1).date);
         // В альпари уже нет нулевых роллов, но они есть в этой статистике
         if (lastDate.hour() === 0) {
             return moment(nth(data, -2).date);
@@ -87,7 +86,6 @@ window.addEventListener('message', async (message: MessageEvent) => {
             chrome.storage.local.set({[Storage.INVEST_STATS]: {}});
             break;
         case Command.INIT:
-            date = moment();
             config = message.data.data.config;
             message.source.postMessage({
                 command: Command.PAGE_LAST_ROLLOVER,

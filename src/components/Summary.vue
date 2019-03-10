@@ -1,28 +1,51 @@
 <template>
   <div id="alpari-ext-summary" :class="$style.summary">
-    <button
-      class="button button_type_primary"
-      :class="$style.button"
-      v-if="show && investmentSummary"
-      v-on:click="save">
-      <span class="button__deco">Сохранить</span>
-    </button>
-    <button
-      class="button button_type_primary"
-      :class="$style.button"
-      v-on:click="openStats">
-      <span class="button__deco">Открыть статистику</span>
-    </button>
+    <div :class="$style.buttons">
+      <button
+        class="button button_type_primary"
+        :class="$style.button"
+        v-if="show && investmentSummary"
+        v-on:click="save">
+        <span class="button__deco">Сохранить</span>
+      </button>
+      <button
+        class="button button_type_primary"
+        :class="$style.button"
+        v-on:click="openStats">
+        <span class="button__deco">Открыть статистику</span>
+      </button>
+    </div>
 
-    <span v-if="typeof $store.state.lastRollover !== 'undefined'">
-      Последний ролловер: {{$store.state.lastRollover.format('DD.MM HH:mm')}}
-    </span>
+    <div class="dotted-list-panel dotted-list-panel_rounded_yes dotted-list-panel_white_yes s_mb_27">
+      <ul>
+        <li 
+          v-if="typeof $store.state.initDate !== 'undefined'"
+          class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted">
+          <div class="dotted-list-panel__key s_position_relative s_float_l">Время открытия страницы:</div>
+          <div class="dotted-list-panel__value s_position_relative s_float_r">{{$store.state.initDate.format('DD.MM.YY HH:mm:ss')}}</div>
+          <div class="s_clear_both"></div>
+        </li>
+        <li 
+          v-if="typeof $store.state.lastRollover !== 'undefined'" 
+          class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted">
+          <div class="dotted-list-panel__key s_position_relative s_float_l">Последний ролловер:</div>
+          <div class="dotted-list-panel__value s_position_relative s_float_r">{{$store.state.lastRollover.format('DD.MM.YY HH:mm:ss')}}</div>
+          <div class="s_clear_both"></div>
+        </li>
+        <li 
+          v-if="typeof $store.state.nextRollover !== 'undefined'" 
+          class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted">
+          <div class="dotted-list-panel__key s_position_relative s_float_l">Следующий ролловер:</div>
+          <div class="dotted-list-panel__value s_position_relative s_float_r">{{$store.state.nextRollover.format('DD.MM.YY HH:mm:ss')}}</div>
+          <div class="s_clear_both"></div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import {convertTextToObject} from '@/helper/summary';
 import * as Command from '@/consts/command';
 import find from 'lodash/find';
 
@@ -67,10 +90,11 @@ export default class Summary extends Vue {
 </script>
 
 <style lang="less" module>
-  .summary {
-    margin-top: 5px;
-    margin-bottom: 10px;
+  .buttons {
+    margin: 10px 0;
+    text-align: right;
   }
+
   .button {
     margin-right: 5px;
 

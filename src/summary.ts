@@ -14,7 +14,7 @@ function initVueInstance(): void {
     if (root instanceof HTMLElement && (root as any).__vue__ instanceof Vue) {
         return;
     }
-    const element = accountTabs.querySelector('[data-field-name="currencyButton"]');
+    const element = accountTabs.querySelector('#investment-summary');
     if (element instanceof HTMLElement) {
         const div = document.createElement('div');
         element.appendChild(div);
