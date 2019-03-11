@@ -5,7 +5,7 @@ import {EventBus} from '@/event-bus';
 import '@/summary';
 import * as Command from '@/consts/command';
 import store from '@/store';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 Vue.config.productionTip = false;
 
@@ -15,14 +15,14 @@ window.addEventListener('message', async (message: MessageEvent) => {
   }
   switch (message.data.command) {
     case Command.PAGE_LAST_ROLLOVER:
-      store.state.lastRollover = moment(message.data.lastRollover);
+      store.state.lastRollover = moment.tz(message.data.lastRollover, moment.tz.guess());
       break;
   }
 });
 
 function detectNextRollover(v: any): moment.Moment {
   // @todo типы
-  return moment(v.items[0].pammAccount.dateNextRolloverInput);
+  return moment.tz(v.items[0].pammAccount.dateNextRolloverInput, 'Europe/Kiev').tz(moment.tz.guess());
 }
 
 let config: object|null = null;

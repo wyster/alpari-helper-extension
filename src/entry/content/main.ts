@@ -1,7 +1,6 @@
 import * as Command from '@/consts/command';
 import * as Storage from '@/consts/storage';
-import moment from 'moment';
-import last from 'lodash/last';
+import moment from 'moment-timezone';
 import nth from 'lodash/nth';
 
 interface GenericObject { [key: string]: any; }
@@ -47,10 +46,10 @@ async function getlastRollover(): Promise<any> {
     // @todo типы
     const data = await response.json();
     if (Array.isArray(data)) {
-        const lastDate = moment(nth(data, -1).date);
+        const lastDate = moment.tz(nth(data, -1).date, 'Europe/Kiev');
         // В альпари уже нет нулевых роллов, но они есть в этой статистике
         if (lastDate.hour() === 0) {
-            return moment(nth(data, -2).date);
+            return moment.tz(nth(data, -2), 'Europe/Kiev');
         }
         return lastDate;
     }

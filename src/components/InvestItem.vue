@@ -16,7 +16,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { Item } from '@/items';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 @Component({
 })
@@ -30,12 +30,13 @@ export default class InvestItem extends Vue {
     public item!: Item[];
 
     private formatDate(date: string) {
-        const dateObject = moment(date);
+        const dateObject = moment.tz(date, 'Europe/Kiev');
+        let format = 'DD.MM HH';
         if (dateObject.isSame(new Date(), 'day')) {
-            return dateObject.format('HH');
+            format = 'HH';
         }
 
-        return dateObject.format('DD.MM HH');
+        return dateObject.tz(moment.tz.guess()).format(format);
     }
 }
 </script>
