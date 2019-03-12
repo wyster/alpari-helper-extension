@@ -13,15 +13,11 @@ interface RootState {
 const state: RootState = {
   lastRollover: undefined,
   nextRollover: undefined,
-  initDate: undefined,
+  initDate: undefined
 };
 
 export default new Vuex.Store({
   state,
-  mutations: {
-
-  },
-  actions: {
-
-  },
+  mutations: {},
+  actions: {}
 });
