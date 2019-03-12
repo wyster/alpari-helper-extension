@@ -2,6 +2,7 @@ import * as Command from '@/consts/command';
 import * as Storage from '@/consts/storage';
 import moment from 'moment-timezone';
 import nth from 'lodash/nth';
+import find from 'lodash/find';
 
 interface GenericObject {
   [key: string]: any;
@@ -40,7 +41,12 @@ async function getActiveAccounts(): Promise<any> {
  * Отдаёт дату последнего ролловера
  */
 async function getlastRollover(): Promise<any> {
-  const id = config.items[0].id;
+  const row = find(config.items, { status: 'active' } as any);
+  if (!row) {
+    throw new Error('Last rollover not found');
+  }
+  // @todo type
+  const id = (row as any).id;
   const endDate = moment().format('DD-MM-YYYY');
   const beforeDate = moment()
     .subtract(7, 'day')
