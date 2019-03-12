@@ -6,6 +6,7 @@ import '@/summary';
 import * as Command from '@/consts/command';
 import store from '@/store';
 import moment from 'moment-timezone';
+import map from 'lodash/map';
 
 Vue.config.productionTip = false;
 
@@ -17,7 +18,7 @@ window.addEventListener('message', async (message: MessageEvent) => {
     case Command.PAGE_LAST_ROLLOVER:
       store.state.lastRollover = moment.tz(
         message.data.lastRollover,
-        moment.tz.guess()
+        'Europe/Kiev'
       );
       break;
   }
@@ -25,9 +26,11 @@ window.addEventListener('message', async (message: MessageEvent) => {
 
 function detectNextRollover(v: any): moment.Moment {
   // @todo типы
-  return moment
-    .tz(v.items[0].pammAccount.dateNextRolloverInput, 'Europe/Kiev')
-    .tz(moment.tz.guess());
+  const dates = map(v.items, item => {
+    return moment.tz(item.pammAccount.dateNextRolloverInput, 'Europe/Kiev');
+  });
+
+  return moment.min(dates);
 }
 
 let config: object | null = null;

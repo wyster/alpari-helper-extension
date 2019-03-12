@@ -22,21 +22,21 @@
           v-if="typeof $store.state.initDate !== 'undefined'"
           class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted">
           <div class="dotted-list-panel__key s_position_relative s_float_l">Время открытия страницы:</div>
-          <div class="dotted-list-panel__value s_position_relative s_float_r">{{$store.state.initDate.format('DD.MM.YY HH:mm:ss')}}</div>
+          <div class="dotted-list-panel__value s_position_relative s_float_r">{{formatDate($store.state.initDate)}}</div>
           <div class="s_clear_both"></div>
         </li>
         <li 
           v-if="typeof $store.state.lastRollover !== 'undefined'" 
           class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted">
           <div class="dotted-list-panel__key s_position_relative s_float_l">Последний ролловер:</div>
-          <div class="dotted-list-panel__value s_position_relative s_float_r">{{$store.state.lastRollover.format('DD.MM.YY HH:mm:ss')}}</div>
+          <div class="dotted-list-panel__value s_position_relative s_float_r">{{formatDate($store.state.lastRollover)}}</div>
           <div class="s_clear_both"></div>
         </li>
         <li 
           v-if="typeof $store.state.nextRollover !== 'undefined'" 
           class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted">
           <div class="dotted-list-panel__key s_position_relative s_float_l">Следующий ролловер:</div>
-          <div class="dotted-list-panel__value s_position_relative s_float_r">{{$store.state.nextRollover.format('DD.MM.YY HH:mm:ss')}}</div>
+          <div class="dotted-list-panel__value s_position_relative s_float_r">{{formatDate($store.state.nextRollover)}}</div>
           <div class="s_clear_both"></div>
         </li>
       </ul>
@@ -48,6 +48,7 @@
 import {Component, Vue} from 'vue-property-decorator';
 import * as Command from '@/consts/command';
 import find from 'lodash/find';
+import moment from 'moment-timezone';
 
 interface AlpariConfig {
   summary: object;
@@ -85,6 +86,10 @@ export default class Summary extends Vue {
         window.postMessage({
             command: Command.OPEN_INVEST_STATS,
         }, '*');
+    }
+
+    private formatDate(date: moment.Moment): string {
+        return date.tz(moment.tz.guess()).format('DD.MM.YY HH:mm:ss');
     }
 }
 </script>
