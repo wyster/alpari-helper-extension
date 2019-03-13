@@ -74,6 +74,10 @@ export default class Summary extends Vue {
             console.error('config is null');
             return;
         }
+        if (this.$store.state.nextRollover.tz(moment.tz.guess()).isBefore(moment())) {
+            alert(`Обновите страницу, уже прошёл ролловер в ${this.formatDate(this.$store.state.nextRollover)}`);
+            return;
+        }
         window.postMessage({
             command: Command.SAVE_INVEST_STATS,
             data: find(this.alpariConfig.summary, ({currency: 'USD'} as any)),
