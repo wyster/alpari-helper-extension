@@ -74,10 +74,17 @@ export default class Summary extends Vue {
             console.error('config is null');
             return;
         }
+
         if (this.$store.state.nextRollover.tz(moment.tz.guess()).isBefore(moment())) {
-            alert(`Обновите страницу, уже прошёл ролловер в ${this.formatDate(this.$store.state.nextRollover)}`);
+            alert(`Пожалуйста обновите страницу, уже прошёл ролловер в ${this.formatDate(this.$store.state.nextRollover)}`);
             return;
         }
+        if (!this.$store.state.nextRollover.clone().subtract(1, 'hour').isSame(this.$store.state.lastRollover)) {
+            console.log(this.$store.state.nextRollover.format());
+            alert(`Пожалуйста обновите страницу, последний ролловер был больше часа назад ${this.formatDate(this.$store.state.lastRollover)}`);
+            return;
+        }
+
         window.postMessage({
             command: Command.SAVE_INVEST_STATS,
             data: find(this.alpariConfig.summary, ({currency: 'USD'} as any)),
