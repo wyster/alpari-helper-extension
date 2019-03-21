@@ -49,6 +49,8 @@ import {Component, Vue} from 'vue-property-decorator';
 import * as Command from '@/consts/command';
 import find from 'lodash/find';
 import moment from 'moment-timezone';
+import map from 'lodash/map';
+import * as Source from '@/consts/source';
 
 interface AlpariConfig {
   summary: object;
@@ -71,23 +73,44 @@ export default class Summary extends Vue {
 
     private save(): void {
         if (this.alpariConfig === null) {
-            console.error('config is null');
+            alert('Произошла ошибка, попробуйте обновить страницу и повторить запрос!');
+            this.show = false;
             return;
         }
 
         if (this.$store.state.nextRollover.tz(moment.tz.guess()).isBefore(moment())) {
             alert(`Пожалуйста обновите страницу, уже прошёл ролловер в ${this.formatDate(this.$store.state.nextRollover)}`);
+            this.show = false;
             return;
         }
         if (!this.$store.state.nextRollover.clone().subtract(1, 'hour').isSame(this.$store.state.lastRollover)) {
-            console.log(this.$store.state.nextRollover.format());
             alert(`Пожалуйста обновите страницу, последний ролловер был больше часа назад ${this.formatDate(this.$store.state.lastRollover)}`);
+            this.show = false;
+            return;
+        }
+
+        const getLastSave = () => {
+            // @todo типы
+            const dates = map(this.$store.state.investStats, item => {
+                return moment(item.date);
+            });
+
+            return moment.max(dates);
+        };
+
+        if (getLastSave().isBetween(
+            this.$store.state.lastRollover.tz(moment.tz.guess()),
+            this.$store.state.nextRollover.tz(moment.tz.guess())
+        )) {
+            alert('У вас уже есть статистика за текущий час!');
+            this.show = false;
             return;
         }
 
         window.postMessage({
             command: Command.SAVE_INVEST_STATS,
             data: find(this.alpariConfig.summary, ({currency: 'USD'} as any)),
+            source: Source.PAGE
         }, '*');
 
         this.show = false;
@@ -96,6 +119,7 @@ export default class Summary extends Vue {
     private openStats(): void {
         window.postMessage({
             command: Command.OPEN_INVEST_STATS,
+            source: Source.PAGE
         }, '*');
     }
 
