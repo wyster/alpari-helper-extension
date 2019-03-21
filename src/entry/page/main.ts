@@ -7,6 +7,8 @@ import * as Command from '@/consts/command';
 import store from '@/store';
 import moment from 'moment-timezone';
 import map from 'lodash/map';
+import * as Storage from '@/consts/storage';
+import * as Source from '@/consts/source';
 
 Vue.config.productionTip = false;
 
@@ -14,15 +16,19 @@ window.addEventListener('message', async (message: MessageEvent) => {
   if (message.source !== window) {
     return;
   }
+  if (message.data.source !== Source.CONTENT_SCRIPT) {
+    return;
+  }
   switch (message.data.command) {
-    case Command.PAGE_LAST_ROLLOVER:
+    case Command.INIT:
+      store.state.investStats = message.data[Storage.INVEST_STATS];
       store.state.lastRollover = moment.tz(
-        message.data.lastRollover,
-        'Europe/Kiev'
+          message.data.lastRollover,
+          'Europe/Kiev'
       );
       break;
   }
-});
+}, false);
 
 function detectNextRollover(v: any): moment.Moment {
   // @todo типы
@@ -46,8 +52,9 @@ if (config !== null) {
   store.state.nextRollover = detectNextRollover(config);
   store.state.initDate = moment();
 
-  window.postMessage(
+  window.parent.postMessage(
     {
+      source: Source.PAGE,
       command: Command.INIT,
       data: {
         config

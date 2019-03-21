@@ -1,5 +1,6 @@
 import * as Command from '@/consts/command';
 import * as Storage from '@/consts/storage';
+import * as Source from '@/consts/source';
 import moment from 'moment-timezone';
 import nth from 'lodash/nth';
 import find from 'lodash/find';
@@ -38,6 +39,23 @@ async function getActiveAccounts(): Promise<any> {
 }
 
 /**
+ *
+ */
+async function getInvestStats(): Promise<any> {
+  return new Promise(resolve => {
+    chrome.storage.local.get(
+        [Storage.INVEST_STATS],
+        ({ investStats: result }) => {
+          if (typeof result === 'undefined') {
+            result = [];
+          }
+          resolve(result);
+        }
+    )
+  });
+}
+
+/**
  * Отдаёт дату последнего ролловера
  */
 async function getlastRollover(): Promise<any> {
@@ -73,6 +91,9 @@ window.addEventListener('message', async (message: MessageEvent) => {
   if (message.source !== window) {
     return;
   }
+  if (message.data.source !== Source.PAGE) {
+    return;
+  }
   switch (message.data.command as string) {
     case Command.SAVE_INVEST_STATS:
       const preparedData: InvestStats = {
@@ -80,16 +101,10 @@ window.addEventListener('message', async (message: MessageEvent) => {
         date: moment().format(),
         activeAccounts: await getActiveAccounts()
       };
-      chrome.storage.local.get(
-        [Storage.INVEST_STATS],
-        ({ investStats: result }) => {
-          if (typeof result === 'undefined') {
-            result = [];
-          }
-          result.push(preparedData);
-          chrome.storage.local.set({ [Storage.INVEST_STATS]: result });
-        }
-      );
+      getInvestStats().then(result => {
+        result.push(preparedData);
+        chrome.storage.local.set({ [Storage.INVEST_STATS]: result });
+      });
       break;
     case Command.OPEN_INVEST_STATS:
       chrome.runtime.sendMessage(
@@ -106,8 +121,10 @@ window.addEventListener('message', async (message: MessageEvent) => {
       config = message.data.data.config;
       message.source.postMessage(
         {
-          command: Command.PAGE_LAST_ROLLOVER,
-          lastRollover: (await getlastRollover()).format()
+          source: Source.CONTENT_SCRIPT,
+          command: Command.INIT,
+          lastRollover: (await getlastRollover()).format(),
+          investStats: await getInvestStats()
         },
         message.origin
       );
