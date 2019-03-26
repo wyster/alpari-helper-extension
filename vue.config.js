@@ -1,5 +1,6 @@
 module.exports = {
   filenameHashing: false,
+  css: {extract: false},
   configureWebpack: {
     devtool: 'source-map',
     entry: {
@@ -9,5 +10,15 @@ module.exports = {
       'invest-stats': './src/entry/invest-stats.ts',
       'store-manager': './src/entry/store-manager.ts'
     }
+  },
+  chainWebpack: config => {
+    if (process.env.NODE_ENV === 'production') {
+      config
+          .mode('production')
+          .output
+          .filename('[name].js')
+          .chunkFilename('[name].js');
+    }
+    config.optimization.delete('splitChunks');
   }
 }
