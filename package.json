@@ -1,11 +1,13 @@
 {
-  "name": "alpari-extension",
+  "name": "alpari-helper-extension",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
+    "build:dev": "npm run build -- --mode=development",
+    "build:dev:watch": "npm run build:dev -- --watch",
     "lint": "vue-cli-service lint",
-    "serve": "vue-cli-service serve",
+    "lint:fix": "npm run lint -- --fix",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },
@@ -14,9 +16,9 @@
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
-    "vue": "^2.6.6",
-    "vue-class-component": "^6.0.0",
-    "vue-property-decorator": "^7.0.0",
+    "vue": "^2.6.10",
+    "vue-class-component": "^7.0.0",
+    "vue-property-decorator": "^8.0.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -24,16 +26,16 @@
     "@commitlint/config-conventional": "^7.5.0",
     "@types/chai": "^4.1.0",
     "@types/chrome": "0.0.81",
-    "@types/highcharts": "^5.0.36",
-    "@types/lodash": "^4.14.122",
+    "@types/highcharts": "^5.0.39",
+    "@types/lodash": "^4.14.123",
     "@types/mocha": "^5.2.4",
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.12",
-    "@vue/cli-plugin-babel": "^3.4.0",
-    "@vue/cli-plugin-e2e-cypress": "^3.4.0",
-    "@vue/cli-plugin-typescript": "^3.4.0",
-    "@vue/cli-plugin-unit-mocha": "^3.4.0",
-    "@vue/cli-service": "^3.4.0",
+    "@vue/cli-plugin-babel": "^3.5.1",
+    "@vue/cli-plugin-e2e-cypress": "^3.5.1",
+    "@vue/cli-plugin-typescript": "^3.5.1",
+    "@vue/cli-plugin-unit-mocha": "^3.5.1",
+    "@vue/cli-service": "^3.5.1",
     "@vue/test-utils": "^1.0.0-beta.20",
     "chai": "^4.1.2",
     "less": "^3.0.4",
@@ -42,8 +44,8 @@
     "prettier": "^1.16.4",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
-    "typescript": "^3.0.0",
-    "vue-template-compiler": "^2.5.21"
+    "typescript": "^3.3.4000",
+    "vue-template-compiler": "^2.6.10"
   },
   "gitHooks": {
     "commit-msg": "commitlint -E GIT_PARAMS",
