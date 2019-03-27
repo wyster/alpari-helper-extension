@@ -89,7 +89,10 @@ export default class Summary extends Vue {
             return;
         }
 
-        const getLastSave = () => {
+        const getLastSave = (): moment.Moment | null => {
+            if (this.$store.state.investStats.length === 0) {
+                return null;
+            }
             // @todo типы
             const dates = map(this.$store.state.investStats, item => {
                 return moment(item.date);
@@ -98,7 +101,8 @@ export default class Summary extends Vue {
             return moment.max(dates);
         };
 
-        if (getLastSave().isBetween(
+        const lastSave = getLastSave();
+        if (lastSave !== null && lastSave.isBetween(
             this.$store.state.lastRollover.tz(moment.tz.guess()),
             this.$store.state.nextRollover.tz(moment.tz.guess())
         )) {
