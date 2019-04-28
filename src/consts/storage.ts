@@ -1,1 +1,1 @@
-export const INVEST_STATS: string = 'investStats';
+export const INVEST_STATS = "investStats";

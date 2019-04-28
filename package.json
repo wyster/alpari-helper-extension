@@ -6,7 +6,7 @@
     "build": "vue-cli-service build",
     "build:dev": "npm run build -- --mode=development",
     "build:dev:watch": "npm run build:dev -- --watch",
-    "lint": "vue-cli-service lint",
+    "lint": "eslint --ext vue,ts,js",
     "lint:fix": "npm run lint -- --fix",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
@@ -31,13 +31,20 @@
     "@types/mocha": "^5.2.4",
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.12",
+    "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@vue/cli-plugin-babel": "^3.5.1",
     "@vue/cli-plugin-e2e-cypress": "^3.5.1",
     "@vue/cli-plugin-typescript": "^3.5.1",
     "@vue/cli-plugin-unit-mocha": "^3.5.1",
     "@vue/cli-service": "^3.5.1",
+    "@vue/eslint-config-typescript": "^4.0.0",
     "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-eslint": "^10.0.1",
     "chai": "^4.1.2",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-vue": "^5.2.2",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "lint-staged": "^8.1.5",
@@ -53,7 +60,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "npm run lint -- --fix",
+      "npm run lint:fix",
       "git add"
     ]
   }

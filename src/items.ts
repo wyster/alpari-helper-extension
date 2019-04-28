@@ -1,6 +1,6 @@
-import Vue from 'vue';
-import store from '@/store';
-import InvestItem from '@/components/InvestItem.vue';
+import Vue from "vue";
+import store from "@/store";
+import InvestItem from "@/components/InvestItem.vue";
 
 export interface PammAccount {
   /**
@@ -33,23 +33,25 @@ export interface Item {
   pammAccount: PammAccount;
 }
 
-export function prepareList(items: Item[]) {
-  items.forEach((item: Item) => {
-    const feature = document.querySelector(
-      `.investment-account-list-item-${item.id}`
-    );
-    if (!feature) {
-      return;
-    }
-    const div = document.createElement('div');
-    feature.appendChild(div);
+export function prepareList(items: Item[]): void {
+  items.forEach(
+    (item: Item): void => {
+      const feature = document.querySelector(
+        `.investment-account-list-item-${item.id}`
+      );
+      if (!feature) {
+        return;
+      }
+      const div = document.createElement("div");
+      feature.appendChild(div);
 
-    new Vue({
-      store,
-      render: h =>
-        h(InvestItem, {
-          props: { item }
-        })
-    }).$mount(div);
-  });
+      new Vue({
+        store,
+        render: (h): any =>
+          h(InvestItem, {
+            props: { item }
+          })
+      }).$mount(div);
+    }
+  );
 }

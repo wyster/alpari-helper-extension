@@ -29,10 +29,20 @@ export class Summary {
   public archivedInvestments: number | undefined = undefined;
 }
 
+function matchNumberValue(find: string): number | undefined {
+  const str = find.replace(/\s+/g, "");
+  const regExp = new RegExp(/(-|)(\d+\.\d+|\d+)/);
+  const value = regExp.exec(str);
+  if (!value) {
+    return undefined;
+  }
+  return Number(value[0]);
+}
+
 export function convertTextToObject(text: string): Summary {
   let prepared = text.trim();
-  prepared = prepared.replace(/−/g, '-');
-  const preparedArray = prepared.split('\n');
+  prepared = prepared.replace(/−/g, "-");
+  const preparedArray = prepared.split("\n");
   const summary = new Summary();
   summary.founds = matchNumberValue(preparedArray[0]);
   summary.dayGrown = matchNumberValue(preparedArray[1]);
@@ -43,14 +53,4 @@ export function convertTextToObject(text: string): Summary {
   summary.archivedInvestments = matchNumberValue(preparedArray[6]);
 
   return summary;
-}
-
-function matchNumberValue(find: string): number | undefined {
-  const str = find.replace(/\s+/g, '');
-  const regExp = new RegExp(/(-|)(\d+\.\d+|\d+)/);
-  const value = regExp.exec(str);
-  if (!value) {
-    return undefined;
-  }
-  return Number(value[0]);
 }

@@ -1,18 +1,23 @@
-import Highcharts from 'highcharts';
-import map from 'lodash/map';
-import moment from 'moment';
+import Highcharts from "highcharts";
+import map from "lodash/map";
+import moment from "moment";
 
-console.log('invest stats script inited');
+console.log("invest stats script inited");
 
 async function getInvestStats(): Promise<any> {
-  return new Promise(resolve => {
-    chrome.storage.local.get(['investStats'], ({ investStats: result }) => {
-      resolve(result);
-    });
-  });
+  return new Promise(
+    (resolve): void => {
+      chrome.storage.local.get(
+        ["investStats"],
+        ({ investStats: result }): void => {
+          resolve(result);
+        }
+      );
+    }
+  );
 }
 
-async function init() {
+async function init(): Promise<any> {
   const stats = await getInvestStats();
   console.log(stats);
 
@@ -31,22 +36,22 @@ async function init() {
     yAxis: [
       {
         title: {
-          text: 'Кол-во'
+          text: "Кол-во"
         },
         max:
           Math.max(
-            ...map(stats, 'stats.archiveInvestmentCount'),
-            ...map(stats, 'stats.archiveInvestmentCount')
+            ...map(stats, "stats.archiveInvestmentCount"),
+            ...map(stats, "stats.archiveInvestmentCount")
           ) * 3
       },
       {
         title: {
-          text: 'Баланс'
+          text: "Баланс"
         }
       },
       {
         title: {
-          text: 'Прирост'
+          text: "Прирост"
         },
         // Выводит справа
         opposite: true
@@ -58,42 +63,45 @@ async function init() {
 
   options.series.push(
     {
-      type: 'column',
+      type: "column",
       yAxis: 0,
-      name: 'Активные инвестиции',
-      data: map(stats, 'stats.activeInvestmentCount')
+      name: "Активные инвестиции",
+      data: map(stats, "stats.activeInvestmentCount")
     },
     {
-      type: 'column',
+      type: "column",
       yAxis: 0,
-      name: 'Архив',
-      data: map(stats, 'stats.archiveInvestmentCount')
+      name: "Архив",
+      data: map(stats, "stats.archiveInvestmentCount")
     },
     {
-      type: 'spline',
+      type: "spline",
       yAxis: 1,
-      name: 'Баланс по всем инвестиционным счетам',
-      data: map(stats, 'stats.balance')
+      name: "Баланс по всем инвестиционным счетам",
+      data: map(stats, "stats.balance")
     },
     {
-      type: 'spline',
+      type: "spline",
       yAxis: 2,
-      name: 'Прирост за всё время',
-      data: map(stats, 'stats.profitOverall')
+      name: "Прирост за всё время",
+      data: map(stats, "stats.profitOverall")
     },
     {
-      type: 'spline',
+      type: "spline",
       yAxis: 2,
-      name: 'Прирост за всё время (Только активные)',
-      data: map(stats, 'stats.profitOverallActive')
+      name: "Прирост за всё время (Только активные)",
+      data: map(stats, "stats.profitOverallActive")
     }
   );
 
-  options.xAxis.categories = map(stats, item => {
-    return moment(item.date).format('YYYY-MM-DD HH:mm');
-  });
+  options.xAxis.categories = map(
+    stats,
+    (item): string => {
+      return moment(item.date).format("YYYY-MM-DD HH:mm");
+    }
+  );
 
-  Highcharts.chart('chart', options as any);
+  Highcharts.chart("chart", options as any);
 }
 
 init();
