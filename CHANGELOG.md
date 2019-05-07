@@ -1,6 +1,26 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.1.0](https://github.com/wyster/alpari-helper-extension/compare/v1.0.0...v1.1.0) (2019-05-07)
+
+
+### Bug Fixes
+
+* данных может не быть ([b53ee1e](https://github.com/wyster/alpari-helper-extension/commit/b53ee1e))
+
+
+### Build System
+
+* обновление пакетов npm ([5a994d4](https://github.com/wyster/alpari-helper-extension/commit/5a994d4))
+
+
+### Features
+
+* конфигурация для production билда ([ba34340](https://github.com/wyster/alpari-helper-extension/commit/ba34340))
+* миграция с tslint на eslint + prettier + eslint-vue-plugin ([8a1e38f](https://github.com/wyster/alpari-helper-extension/commit/8a1e38f))
+
+
 
 <a name="1.0.0"></a>
 # 1.0.0 (2019-03-26)
