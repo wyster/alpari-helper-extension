@@ -5,14 +5,14 @@ import moment from "moment";
 Vue.use(Vuex);
 
 interface RootState {
-  lastRollover: moment.Moment | undefined;
+  lastRollover: moment.Moment | undefined | null;
   nextRollover: moment.Moment | undefined;
   initDate: moment.Moment | undefined;
   investStats: undefined | any;
 }
 
 const state: RootState = {
-  lastRollover: undefined,
+  lastRollover: null,
   nextRollover: undefined,
   initDate: undefined,
   investStats: undefined

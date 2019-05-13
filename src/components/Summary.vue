@@ -99,6 +99,11 @@ export default class Summary extends Vue {
       return;
     }
 
+    if (this.$store.state.lastRollover === null) {
+        alert('Идёт загрузка данных, пожалуйста повторите запрос через несколько секунд!');
+        return;
+    }
+
     if (
       this.$store.state.nextRollover.tz(moment.tz.guess()).isBefore(moment())
     ) {
@@ -140,6 +145,7 @@ export default class Summary extends Vue {
     const lastSave = getLastSave();
     if (
       lastSave !== null &&
+      this.$store.state.lastRollover !== undefined &&
       lastSave.isBetween(
         this.$store.state.lastRollover.tz(moment.tz.guess()),
         this.$store.state.nextRollover.tz(moment.tz.guess())
@@ -172,8 +178,12 @@ export default class Summary extends Vue {
     );
   }
 
-  private formatDate(date: moment.Moment): string {
-    return date.tz(moment.tz.guess()).format("DD.MM.YY HH:mm:ss");
+  private formatDate(date: moment.Moment | null | undefined): string | null {
+    if (date instanceof moment) {
+      return date.tz(moment.tz.guess()).format("DD.MM.YY HH:mm:ss");
+    }
+
+    return null;
   }
 }
 </script>
