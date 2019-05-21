@@ -21,16 +21,16 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import * as Storage from "@/consts/storage";
+import { browser } from "webextension-polyfill-ts";
 
 // @todo type
 async function getInvestStats(): Promise<any> {
   return new Promise(resolve => {
-    chrome.storage.local.get(
-      [Storage.INVEST_STATS],
-      ({ investStats: result }) => {
+    browser.storage.local.get(
+      [Storage.INVEST_STATS]
+    ).then(({ investStats: result }) => {
         resolve(result);
-      }
-    );
+    })
   });
 }
 
@@ -47,7 +47,7 @@ export default class StoreManager extends Vue {
   }
 
   private clear(): void {
-    chrome.storage.local.set({ [Storage.INVEST_STATS]: {} });
+    browser.storage.local.set({ [Storage.INVEST_STATS]: {} });
   }
 
   private put(event: Event): void {
@@ -55,7 +55,7 @@ export default class StoreManager extends Vue {
     const value = new FormData(event.target as HTMLFormElement).get(
       "data"
     ) as string;
-    chrome.storage.local.set({ [Storage.INVEST_STATS]: JSON.parse(value) });
+    browser.storage.local.set({ [Storage.INVEST_STATS]: JSON.parse(value) });
   }
 }
 </script>

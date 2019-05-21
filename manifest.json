@@ -1,15 +1,17 @@
 {
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "short_name": "__MSG_appShortName__",
   "manifest_version": 2,
-  "name": "AlpariHelperExtension",
   "version": "1.1.0",
+  "default_locale": "ru",
   "content_scripts": [
     {
       "js": [
         "dist/content/main.js"
       ],
       "matches": [
-        "*://my.alpari.com/*/investments/pamm_accounts/*",
-        "*://localhost:*/*"
+        "*://my.alpari.com/*/investments/pamm_accounts/*"
       ],
       "run_at": "document_idle"
     }
@@ -21,10 +23,12 @@
     ]
   },
   "web_accessible_resources": [
-    "dist/*"
+    "dist/*",
+    "pages/*"
   ],
   "permissions": [
     "storage",
     "tabs"
-  ]
+  ],
+  "devtools_page": "pages/devtools-background.html"
 }

@@ -1,0 +1,18 @@
+{
+  "appName": {
+    "message": "AlpariHelperExtension",
+    "description": ""
+  },
+  "appShortName": {
+    "message": "AlpariHelperExtension",
+    "description": ""
+  },
+  "appDescription": {
+    "message": "",
+    "description": "The description of the application"
+  },
+  "browserActionTitle": {
+    "message": "AlpariHelperExtension",
+    "description": ""
+  }
+}

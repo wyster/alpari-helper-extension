@@ -1,14 +1,15 @@
 import Highcharts from "highcharts";
 import map from "lodash/map";
 import moment from "moment";
+import { browser } from "webextension-polyfill-ts";
+import * as Storage from "@/consts/storage";
 
 console.log("invest stats script inited");
 
 async function getInvestStats(): Promise<any> {
   return new Promise(
     (resolve): void => {
-      chrome.storage.local.get(
-        ["investStats"],
+      browser.storage.local.get([Storage.INVEST_STATS]).then(
         ({ investStats: result }): void => {
           resolve(result);
         }

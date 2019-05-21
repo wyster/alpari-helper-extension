@@ -1,17 +1,17 @@
 import * as Command from "@/consts/command";
+import { browser } from "webextension-polyfill-ts";
 
 console.log("background script inited");
 
-chrome.runtime.onMessage.addListener(
-  (request: any, sender, response): void => {
-    switch (request.command) {
-      case Command.OPEN_INVEST_STATS:
-        chrome.tabs.create({
-          url: chrome.extension.getURL("/invest-stats.html"),
-          active: true
-        });
-        response();
-        break;
-    }
+browser.runtime.onMessage.addListener((request, sender) => {
+  switch (request.command) {
+    case Command.OPEN_INVEST_STATS:
+      browser.tabs.create({
+        url: browser.extension.getURL("/invest-stats.html"),
+        active: true
+      });
+      break;
   }
-);
+
+  return Promise.resolve();
+});

@@ -4,6 +4,7 @@ import * as Source from "@/consts/source";
 import moment from "moment-timezone";
 import nth from "lodash/nth";
 import find from "lodash/find";
+import { browser } from "webextension-polyfill-ts";
 
 interface GenericObject {
   [key: string]: any;
@@ -15,7 +16,7 @@ function appendScriptSrc(src: string): Promise<any> {
     (resolve): void => {
       const script = document.createElement("script");
       script.setAttribute("type", "text/javascript");
-      script.src = chrome.runtime.getURL(src);
+      script.src = browser.runtime.getURL(src);
       script.async = true;
       script.onload = resolve;
       document.head.appendChild(script);
@@ -47,8 +48,7 @@ async function getActiveAccounts(): Promise<any> {
 async function getInvestStats(): Promise<any> {
   return new Promise(
     (resolve): void => {
-      chrome.storage.local.get(
-        [Storage.INVEST_STATS],
+      browser.storage.local.get([Storage.INVEST_STATS]).then(
         ({ investStats: result }): void => {
           if (typeof result === "undefined") {
             result = [];
@@ -119,20 +119,19 @@ window.addEventListener(
         getInvestStats().then(
           (result): void => {
             result.push(preparedData);
-            chrome.storage.local.set({ [Storage.INVEST_STATS]: result });
+            browser.storage.local.set({ [Storage.INVEST_STATS]: result });
           }
         );
         break;
       case Command.OPEN_INVEST_STATS:
-        chrome.runtime.sendMessage(
-          { command: Command.OPEN_INVEST_STATS },
-          (response): void => {
+        browser.runtime
+          .sendMessage({ command: Command.OPEN_INVEST_STATS })
+          .then(response => {
             console.log(response);
-          }
-        );
+          });
         break;
       case Command.CLEAR_INVEST_STATS:
-        chrome.storage.local.set({ [Storage.INVEST_STATS]: {} });
+        browser.storage.local.set({ [Storage.INVEST_STATS]: {} });
         break;
       case Command.INIT:
         config = message.data.data.config;
