@@ -21,5 +21,16 @@ const state: RootState = {
 export default new Vuex.Store({
   state,
   mutations: {},
-  actions: {}
+  actions: {},
+  getters: {
+    lastRollover({ lastRollover }: RootState) {
+      return lastRollover;
+    },
+    nextRollover({ nextRollover }: RootState) {
+      return nextRollover;
+    },
+    initDate({ initDate }: RootState) {
+      return initDate;
+    }
+  }
 });

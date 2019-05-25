@@ -23,38 +23,38 @@
     >
       <ul>
         <li
-          v-if="typeof $store.state.initDate !== 'undefined'"
+          v-if="initDate"
           class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted"
         >
           <div class="dotted-list-panel__key s_position_relative s_float_l">
             {{ $t("Page open time") }}:
           </div>
           <div class="dotted-list-panel__value s_position_relative s_float_r">
-            {{ formatDate($store.state.initDate) }}
+            {{ formatDate(initDate) }}
           </div>
           <div class="s_clear_both"></div>
         </li>
         <li
-          v-if="typeof $store.state.lastRollover !== 'undefined'"
+          v-if="lastRollover"
           class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted"
         >
           <div class="dotted-list-panel__key s_position_relative s_float_l">
             {{ $t("Last rollover") }}:
           </div>
           <div class="dotted-list-panel__value s_position_relative s_float_r">
-            {{ formatDate($store.state.lastRollover) }}
+            {{ formatDate(lastRollover) }}
           </div>
           <div class="s_clear_both"></div>
         </li>
         <li
-          v-if="typeof $store.state.nextRollover !== 'undefined'"
+          v-if="nextRollover"
           class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted"
         >
           <div class="dotted-list-panel__key s_position_relative s_float_l">
             {{ $t("Next rollover") }}:
           </div>
           <div class="dotted-list-panel__value s_position_relative s_float_r">
-            {{ formatDate($store.state.nextRollover) }}
+            {{ formatDate(nextRollover) }}
           </div>
           <div class="s_clear_both"></div>
         </li>
@@ -65,6 +65,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { mapGetters } from "vuex";
 import * as Command from "@/consts/command";
 import find from "lodash/find";
 import moment from "moment-timezone";
@@ -76,11 +77,16 @@ interface AlpariConfig {
   locale: string;
 }
 
-@Component({})
+@Component({
+  computed: mapGetters(["lastRollover", "nextRollover", "initDate"])
+})
 export default class Summary extends Vue {
   public show: boolean = true;
   public investmentSummary: HTMLElement | null = null;
   private alpariConfig: AlpariConfig | null = null;
+  private lastRollover: moment.Moment | undefined | null;
+  private nextRollover: moment.Moment | undefined;
+  private initDate: moment.Moment | undefined;
 
   public created(): void {
     console.log("created");
@@ -96,7 +102,7 @@ export default class Summary extends Vue {
   }
 
   private save(): void {
-    if (this.alpariConfig === null) {
+    if (!this.alpariConfig) {
       alert(
         "Произошла ошибка, попробуйте обновить страницу и повторить запрос!"
       );
@@ -104,31 +110,38 @@ export default class Summary extends Vue {
       return;
     }
 
-    if (this.$store.state.lastRollover === null) {
-        alert('Идёт загрузка данных, пожалуйста повторите запрос через несколько секунд!');
-        return;
+    if (!this.lastRollover) {
+      alert(
+        "Идёт загрузка данных, пожалуйста повторите запрос через несколько секунд!"
+      );
+      return;
     }
 
-    if (
-      this.$store.state.nextRollover.tz(moment.tz.guess()).isBefore(moment())
-    ) {
+      if (!this.nextRollover) {
+          alert(
+              "Идёт загрузка данных, пожалуйста повторите запрос через несколько секунд!"
+          );
+          return;
+      }
+
+    if (this.nextRollover.tz(moment.tz.guess()).isBefore(moment())) {
       alert(
         `Пожалуйста обновите страницу, уже прошёл ролловер в ${this.formatDate(
-          this.$store.state.nextRollover
+          this.nextRollover
         )}`
       );
       this.show = false;
       return;
     }
     if (
-      !this.$store.state.nextRollover
+      !this.nextRollover
         .clone()
         .subtract(1, "hour")
-        .isSame(this.$store.state.lastRollover)
+        .isSame(this.lastRollover)
     ) {
       alert(
         `Пожалуйста обновите страницу, последний ролловер был больше часа назад ${this.formatDate(
-          this.$store.state.lastRollover
+          this.lastRollover
         )}`
       );
       this.show = false;
@@ -136,11 +149,11 @@ export default class Summary extends Vue {
     }
 
     const getLastSave = (): moment.Moment | null => {
-      if (this.$store.state.investStats.length === 0) {
+      if (this.investStats.length === 0) {
         return null;
       }
       // @todo типы
-      const dates = map(this.$store.state.investStats, item => {
+      const dates = map(this.investStats, item => {
         return moment(item.date);
       });
 
@@ -150,10 +163,10 @@ export default class Summary extends Vue {
     const lastSave = getLastSave();
     if (
       lastSave !== null &&
-      this.$store.state.lastRollover !== undefined &&
+      this.lastRollover !== undefined &&
       lastSave.isBetween(
-        this.$store.state.lastRollover.tz(moment.tz.guess()),
-        this.$store.state.nextRollover.tz(moment.tz.guess())
+        this.lastRollover.tz(moment.tz.guess()),
+        this.nextRollover.tz(moment.tz.guess())
       )
     ) {
       alert("У вас уже есть статистика за текущий час!");
