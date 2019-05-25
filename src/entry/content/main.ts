@@ -24,7 +24,7 @@ function appendScriptSrc(src: string): Promise<any> {
   );
 }
 
-appendScriptSrc("dist/page/main.js");
+appendScriptSrc("page/main.js");
 
 interface InvestStats {
   stats: object;

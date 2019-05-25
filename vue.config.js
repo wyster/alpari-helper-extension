@@ -1,3 +1,7 @@
+// eslint-disable @typescript-eslint/no-var-requires
+const WebextensionPlugin = require("webpack-webextension-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+
 module.exports = {
   filenameHashing: false,
   css: { extract: false },
@@ -9,8 +13,8 @@ module.exports = {
       "content/main": "./src/entry/content/main.ts",
       "invest-stats": "./src/entry/invest-stats.ts",
       "store-manager": "./src/entry/store-manager.ts",
-      "devtools": "./src/entry/devtools.ts",
-      "devtools-background": "./src/entry/devtools-background.ts",
+      devtools: "./src/entry/devtools.ts",
+      "devtools-background": "./src/entry/devtools-background.ts"
     }
   },
   chainWebpack: config => {
@@ -21,5 +25,18 @@ module.exports = {
         .chunkFilename("[name].js");
     }
     config.optimization.delete("splitChunks");
+    config
+      .plugin("webextension")
+      .use(WebextensionPlugin, [{ vendor: "chrome" }]);
+    config.plugin("copy").use(CopyPlugin, [
+      [
+        {
+          from: "./pages"
+        },
+        {
+          from: "./_locales/**/*.json"
+        }
+      ]
+    ]);
   }
 };

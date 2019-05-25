@@ -8,7 +8,7 @@
   "content_scripts": [
     {
       "js": [
-        "dist/content/main.js"
+        "content/main.js"
       ],
       "matches": [
         "*://my.alpari.com/*/investments/pamm_accounts/*"
@@ -19,16 +19,15 @@
   "background": {
     "persistent": false,
     "scripts": [
-      "dist/background.js"
+      "background.js"
     ]
   },
   "web_accessible_resources": [
-    "dist/*",
-    "pages/*"
+    "*"
   ],
   "permissions": [
     "storage",
     "tabs"
   ],
-  "devtools_page": "pages/devtools-background.html"
+  "devtools_page": "devtools-background.html"
 }
