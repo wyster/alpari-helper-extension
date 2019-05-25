@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/wyster/alpari-helper-extension/compare/v1.1.0...v1.2.0) (2019-05-25)
+
+
+### Bug Fixes
+
+* данные ещё могут загружатся ([daa2661](https://github.com/wyster/alpari-helper-extension/commit/daa2661))
+* пути ([778e1f2](https://github.com/wyster/alpari-helper-extension/commit/778e1f2))
+
+
+### Features
+
+* i18n ([2f2529b](https://github.com/wyster/alpari-helper-extension/commit/2f2529b))
+* добавлен автоматический перезапуск расширения при изменениях ([d390836](https://github.com/wyster/alpari-helper-extension/commit/d390836))
+* миграция на WebExtension API, своя панель в devtools ([1a45e24](https://github.com/wyster/alpari-helper-extension/commit/1a45e24))
+* работа с vuex.mapGetters ([a9d95ad](https://github.com/wyster/alpari-helper-extension/commit/a9d95ad))
+
+
+
 ## [1.1.0](https://github.com/wyster/alpari-helper-extension/compare/v1.0.0...v1.1.0) (2019-05-07)
 
 
