@@ -7,14 +7,14 @@
         v-if="show && investmentSummary"
         @click="save"
       >
-        <span class="button__deco">Сохранить</span>
+        <span class="button__deco">{{ $t("Save") }}</span>
       </button>
       <button
         class="button button_type_primary"
         :class="$style.button"
         @click="openStats"
       >
-        <span class="button__deco">Открыть статистику</span>
+        <span class="button__deco">{{ $t("Open Stats") }}</span>
       </button>
     </div>
 
@@ -27,7 +27,7 @@
           class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted"
         >
           <div class="dotted-list-panel__key s_position_relative s_float_l">
-            Время открытия страницы:
+            {{ $t("Page open time") }}:
           </div>
           <div class="dotted-list-panel__value s_position_relative s_float_r">
             {{ formatDate($store.state.initDate) }}
@@ -39,7 +39,7 @@
           class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted"
         >
           <div class="dotted-list-panel__key s_position_relative s_float_l">
-            Последний ролловер:
+            {{ $t("Last rollover") }}:
           </div>
           <div class="dotted-list-panel__value s_position_relative s_float_r">
             {{ formatDate($store.state.lastRollover) }}
@@ -51,7 +51,7 @@
           class="s_position_relative dotted-list-panel__item dotted-list-panel__item_border-bottom_dotted"
         >
           <div class="dotted-list-panel__key s_position_relative s_float_l">
-            Следующий ролловер:
+            {{ $t("Next rollover") }}:
           </div>
           <div class="dotted-list-panel__value s_position_relative s_float_r">
             {{ formatDate($store.state.nextRollover) }}
@@ -73,6 +73,7 @@ import * as Source from "@/consts/source";
 
 interface AlpariConfig {
   summary: object;
+  locale: string;
 }
 
 @Component({})
@@ -88,6 +89,10 @@ export default class Summary extends Vue {
     this.alpariConfig = JSON.parse((document.querySelector(
       ".config"
     ) as HTMLElement).getAttribute("data-config") as string);
+
+    if (this.alpariConfig) {
+        this.$i18n.locale = this.alpariConfig.locale;
+    }
   }
 
   private save(): void {

@@ -5,6 +5,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
   filenameHashing: false,
   css: { extract: false },
+
   configureWebpack: {
     devtool: "source-map",
     entry: {
@@ -17,6 +18,7 @@ module.exports = {
       "devtools-background": "./src/entry/devtools-background.ts"
     }
   },
+
   chainWebpack: config => {
     if (process.env.NODE_ENV === "production") {
       config
@@ -38,5 +40,14 @@ module.exports = {
         }
       ]
     ]);
+  },
+
+  pluginOptions: {
+    i18n: {
+      locale: 'en',
+      fallbackLocale: 'en',
+      localeDir: 'locales',
+      enableInSFC: false
+    }
   }
 };

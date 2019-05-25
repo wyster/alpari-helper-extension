@@ -12,10 +12,10 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env",
       "mocha",
       "chai",
-      "chrome"
+      "chrome",
+      "node"
     ],
     "paths": {
       "@/*": [

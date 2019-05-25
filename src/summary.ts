@@ -1,6 +1,7 @@
 import Vue from "vue";
 import store from "@/store";
 import Summary from "@/components/Summary.vue";
+import i18n from "@/i18n";
 
 const accountTabs = document.querySelector(".account-tabs") as HTMLElement;
 
@@ -17,6 +18,7 @@ function initVueInstance(): void {
 
     new Vue({
       store,
+      i18n,
       render: (h): any => h(Summary)
     }).$mount(div);
   }
@@ -28,7 +30,7 @@ function run(): void {
     (): void => {
       clearTimeout(timeout);
       timeout = setTimeout((): void => {
-        initVueInstance();
+        //initVueInstance();
       }, 500);
     }
   );

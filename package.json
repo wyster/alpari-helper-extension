@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
+    "lint": "eslint --ext vue,ts,js",
     "build:dev": "npm run build -- --mode=development",
     "build:dev:watch": "npm run build:dev -- --watch",
-    "lint": "eslint --ext vue,ts,js",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
     "lint:fix": "npm run lint -- --fix",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
@@ -18,6 +19,7 @@
     "moment-timezone": "^0.5.23",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.0",
+    "vue-i18n": "^8.0.0",
     "vue-property-decorator": "^8.0.0",
     "vuex": "^3.0.1"
   },
@@ -31,8 +33,10 @@
     "@types/mocha": "^5.2.4",
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.12",
+    "@types/node": "^12.0.2",
+    "@types/webpack": "^4.4.0",
     "@typescript-eslint/eslint-plugin": "^1.7.0",
-    "@vue/cli-plugin-babel": "^3.5.1",
+    "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-e2e-cypress": "^3.5.1",
     "@vue/cli-plugin-typescript": "^3.5.1",
     "@vue/cli-plugin-unit-mocha": "^3.5.1",
@@ -53,6 +57,7 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
     "typescript": "^3.3.4000",
+    "vue-cli-plugin-i18n": "^0.6.0",
     "vue-template-compiler": "^2.6.10",
     "webextension-polyfill-ts": "^0.9.0",
     "webpack-webextension-plugin": "^0.2.0"
