@@ -128,6 +128,7 @@ window.addEventListener(
           .sendMessage({ command: Command.OPEN_INVEST_STATS })
           .then(response => {
             console.log(response);
+            return response;
           });
         break;
       case Command.CLEAR_INVEST_STATS:

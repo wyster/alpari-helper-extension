@@ -67,7 +67,7 @@
     "pre-commit": "lint-staged --debug"
   },
   "lint-staged": {
-    "*.ts": [
+    "*.{ts,vue,js}": [
       "npm run lint:fix",
       "git add"
     ]

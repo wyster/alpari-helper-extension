@@ -97,7 +97,7 @@ export default class Summary extends Vue {
     ) as HTMLElement).getAttribute("data-config") as string);
 
     if (this.alpariConfig) {
-        this.$i18n.locale = this.alpariConfig.locale;
+      this.$i18n.locale = this.alpariConfig.locale;
     }
   }
 
@@ -117,12 +117,12 @@ export default class Summary extends Vue {
       return;
     }
 
-      if (!this.nextRollover) {
-          alert(
-              "Идёт загрузка данных, пожалуйста повторите запрос через несколько секунд!"
-          );
-          return;
-      }
+    if (!this.nextRollover) {
+      alert(
+        "Идёт загрузка данных, пожалуйста повторите запрос через несколько секунд!"
+      );
+      return;
+    }
 
     if (this.nextRollover.tz(moment.tz.guess()).isBefore(moment())) {
       alert(

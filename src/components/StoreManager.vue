@@ -26,11 +26,11 @@ import { browser } from "webextension-polyfill-ts";
 // @todo type
 async function getInvestStats(): Promise<any> {
   return new Promise(resolve => {
-    browser.storage.local.get(
-      [Storage.INVEST_STATS]
-    ).then(({ investStats: result }) => {
+    browser.storage.local
+      .get([Storage.INVEST_STATS])
+      .then(({ investStats: result }) => {
         resolve(result);
-    })
+      });
   });
 }
 

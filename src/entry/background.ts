@@ -3,7 +3,7 @@ import { browser } from "webextension-polyfill-ts";
 
 console.log("background script inited");
 
-browser.runtime.onMessage.addListener((request, sender) => {
+browser.runtime.onMessage.addListener(request => {
   switch (request.command) {
     case Command.OPEN_INVEST_STATS:
       browser.tabs.create({
@@ -12,6 +12,4 @@ browser.runtime.onMessage.addListener((request, sender) => {
       });
       break;
   }
-
-  return Promise.resolve();
 });
