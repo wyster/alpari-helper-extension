@@ -5,5 +5,5 @@ console.log("devtools background inited");
 browser.devtools.panels.create(
   "AlpariHelper",
   "/dist/favicon.ico",
-  "/pages/devtools.html"
+  "devtools.html"
 );
