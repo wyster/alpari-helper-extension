@@ -8,6 +8,7 @@ interface RootState {
   lastRollover: moment.Moment | undefined | null;
   nextRollover: moment.Moment | undefined;
   initDate: moment.Moment | undefined;
+  // @todo type
   investStats: undefined | any;
 }
 
