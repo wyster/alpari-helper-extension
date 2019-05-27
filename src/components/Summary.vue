@@ -149,7 +149,7 @@ export default class Summary extends Vue {
     }
 
     const getLastSave = (): moment.Moment | null => {
-      if (this.investStats.length === 0) {
+      if (!this.investStats || this.investStats.length === 0) {
         return null;
       }
       // @todo типы
