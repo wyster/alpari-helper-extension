@@ -14,7 +14,6 @@ module.exports = {
       "page/main": "./src/entry/page/main.ts",
       "content/main": "./src/entry/content/main.ts",
       "invest-stats": "./src/entry/invest-stats.ts",
-      "store-manager": "./src/entry/store-manager.ts",
       devtools: "./src/entry/devtools.ts",
       "devtools-background": "./src/entry/devtools-background.ts"
     }
