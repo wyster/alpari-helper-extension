@@ -30,7 +30,7 @@ function run(): void {
     (): void => {
       clearTimeout(timeout);
       timeout = setTimeout((): void => {
-        //initVueInstance();
+        initVueInstance();
       }, 500);
     }
   );

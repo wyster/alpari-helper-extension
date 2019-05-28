@@ -78,7 +78,12 @@ interface AlpariConfig {
 }
 
 @Component({
-  computed: mapGetters(["lastRollover", "nextRollover", "initDate"])
+  computed: mapGetters([
+    "lastRollover",
+    "nextRollover",
+    "initDate",
+    "investStats"
+  ])
 })
 export default class Summary extends Vue {
   public show: boolean = true;
@@ -86,6 +91,7 @@ export default class Summary extends Vue {
   private alpariConfig: AlpariConfig | null = null;
   private lastRollover: moment.Moment | undefined | null;
   private nextRollover: moment.Moment | undefined;
+  private initDate: moment.Moment | undefined;
   // @todo type
   private investStats: undefined | any;
 

@@ -120,6 +120,14 @@ window.addEventListener(
           (result): void => {
             result.push(preparedData);
             browser.storage.local.set({ [Storage.INVEST_STATS]: result });
+            message.source.postMessage(
+              {
+                source: Source.CONTENT_SCRIPT,
+                command: Command.INVEST_STATS,
+                investStats: result
+              },
+              message.origin
+            );
           }
         );
         break;
@@ -132,7 +140,15 @@ window.addEventListener(
           });
         break;
       case Command.CLEAR_INVEST_STATS:
-        browser.storage.local.set({ [Storage.INVEST_STATS]: {} });
+        browser.storage.local.set({ [Storage.INVEST_STATS]: [] });
+        message.source.postMessage(
+          {
+            source: Source.CONTENT_SCRIPT,
+            command: Command.INVEST_STATS,
+            investStats: []
+          },
+          message.origin
+        );
         break;
       case Command.INIT:
         config = message.data.data.config;
@@ -140,7 +156,14 @@ window.addEventListener(
           {
             source: Source.CONTENT_SCRIPT,
             command: Command.INIT,
-            lastRollover: (await getlastRollover()).format(),
+            lastRollover: (await getlastRollover()).format()
+          },
+          message.origin
+        );
+        message.source.postMessage(
+          {
+            source: Source.CONTENT_SCRIPT,
+            command: Command.INVEST_STATS,
             investStats: await getInvestStats()
           },
           message.origin

@@ -23,11 +23,13 @@ window.addEventListener(
     }
     switch (message.data.command) {
       case Command.INIT:
-        store.state.investStats = message.data[Storage.INVEST_STATS];
         store.state.lastRollover = moment.tz(
           message.data.lastRollover,
           "Europe/Kiev"
         );
+        break;
+      case Command.INVEST_STATS:
+        store.state.investStats = message.data[Storage.INVEST_STATS];
         break;
     }
   },

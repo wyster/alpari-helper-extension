@@ -32,6 +32,9 @@ export default new Vuex.Store({
     },
     initDate({ initDate }: RootState) {
       return initDate;
+    },
+    investStats({ investStats }: RootState) {
+      return investStats;
     }
   }
 });

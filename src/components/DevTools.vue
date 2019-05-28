@@ -56,7 +56,7 @@ export default class DevTools extends Vue {
   }
 
   private clear(): void {
-    browser.storage.local.set({ [Storage.INVEST_STATS]: {} });
+    browser.storage.local.set({ [Storage.INVEST_STATS]: [] });
   }
 
   private put(event: Event): void {
