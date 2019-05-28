@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/wyster/alpari-helper-extension/compare/v1.2.0...v1.3.0) (2019-05-28)
+
+
+### Bug Fixes
+
+* invalid path ([9a7dce1](https://github.com/wyster/alpari-helper-extension/commit/9a7dce1))
+* статистики нет ([5625077](https://github.com/wyster/alpari-helper-extension/commit/5625077))
+* статистики нет ([0cb4bc6](https://github.com/wyster/alpari-helper-extension/commit/0cb4bc6))
+
+
+### Features
+
+* devtools panel conent ([aee4bb5](https://github.com/wyster/alpari-helper-extension/commit/aee4bb5))
+* обновление стораджа после сохранения ([a140baa](https://github.com/wyster/alpari-helper-extension/commit/a140baa))
+* сохранение базы ([b14c55f](https://github.com/wyster/alpari-helper-extension/commit/b14c55f))
+
+
+
 ## [1.2.0](https://github.com/wyster/alpari-helper-extension/compare/v1.1.0...v1.2.0) (2019-05-25)
 
 
