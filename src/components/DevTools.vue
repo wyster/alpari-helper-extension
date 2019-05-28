@@ -1,14 +1,17 @@
 <template>
   <div :class="theme">
     <div v-if="investStats && investStats.length > 0">
-      Data list:
+      {{ $t("dataList") }}:
       <ul v-for="(item, index) in investStats" :key="index">
         <li>{{ prepareDate(item.date) }}</li>
       </ul>
     </div>
-    <a href="javascript:;" @click="clear(STORAGE.INVEST_STATS)">
-      Очистить
-    </a>
+    <button @click="clear(STORAGE.INVEST_STATS)">
+      {{ $t("clear") }}
+    </button>
+    <button @click="save()">
+      {{ $t("saveDb") }}
+    </button>
     <form @submit="put($event)">
       <textarea :class="$style.textarea" name="data"></textarea>
       <br />
@@ -23,6 +26,7 @@ import { Component, Vue } from "vue-property-decorator";
 import * as Storage from "@/consts/storage";
 import { browser } from "webextension-polyfill-ts";
 import moment from "moment-timezone";
+import FileSaver from "file-saver";
 
 // @todo type
 async function getInvestStats(): Promise<any> {
@@ -77,6 +81,13 @@ export default class DevTools extends Vue {
       .tz(moment.tz.guess())
       .format("Y-MM-D hh:mm");
   }
+
+  private save() {
+    const blob = new Blob([JSON.stringify(this.investStats)], {
+      type: "application/json;charset=utf-8"
+    });
+    FileSaver.saveAs(blob, "db.json");
+  }
 }
 </script>
 
@@ -90,3 +101,18 @@ export default class DevTools extends Vue {
   color: white;
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "clear": "Clear",
+    "saveDb": "Save database",
+    "dataList": "Data list"
+  },
+  "ru": {
+    "clear": "Очистить",
+    "saveDb": "Сохранить базу",
+    "dataList": "Список данных"
+  }
+}
+</i18n>
