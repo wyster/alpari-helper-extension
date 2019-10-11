@@ -1,23 +1,39 @@
 <template>
   <div :class="theme">
-    <div v-if="investStats && investStats.length > 0">
-      {{ $t("dataList") }}:
-      <ul v-for="(item, index) in investStats" :key="index">
-        <li>{{ prepareDate(item.date) }}</li>
-      </ul>
-    </div>
-    <button @click="clear(STORAGE.INVEST_STATS)">
-      {{ $t("clear") }}
-    </button>
     <button @click="save()">
       {{ $t("saveDb") }}
     </button>
-    <form @submit="put($event)">
+    <button @click="clear(STORAGE.INVEST_STATS)">
+      {{ $t("clear") }}
+    </button>
+    <div v-if="investStats && investStats.length > 0">
+      {{ $t("dataList") }} ({{ investStats.length }}):
+      <div :class="$style.container">
+        <div
+          v-for="(item, index) in investStats"
+          :key="index"
+          :class="$style.item"
+        >
+          <a href="javascript:;" @click="showFullData(item)">
+            {{ prepareDate(item.date) }}
+          </a>
+        </div>
+      </div>
+      <textarea
+        v-if="fullData"
+        :class="$style.textarea"
+        v-model="fullData"
+      ></textarea>
+    </div>
+    <div v-else>
+      Загрузка данных...
+    </div>
+    <!--<textarea v-if="prepareTextarea() !== null" :class="$style.textarea" v-text="prepareTextarea()"></textarea>-->
+    <!--<form @submit="put($event)">
       <textarea :class="$style.textarea" name="data"></textarea>
       <br />
       <input type="submit" />
-    </form>
-    <textarea :class="$style.textarea" v-text="prepareTextarea()"></textarea>
+    </form>-->
   </div>
 </template>
 
@@ -46,11 +62,15 @@ export default class DevTools extends Vue {
   private STORAGE = Storage;
   private theme: string = "";
   private $style: any;
+  private fullData: any = "";
 
   private async created(): Promise<any> {
     console.log("created");
 
-    this.investStats = await getInvestStats();
+    getInvestStats().then(result => {
+      this.investStats = result;
+    });
+
     if (typeof browser.devtools !== "undefined") {
       this.theme =
         browser.devtools.panels.themeName === "dark"
@@ -60,7 +80,9 @@ export default class DevTools extends Vue {
   }
 
   private clear(): void {
-    browser.storage.local.set({ [Storage.INVEST_STATS]: [] });
+    if (confirm(this.$t("dropDbConfirm"))) {
+      browser.storage.local.set({ [Storage.INVEST_STATS]: [] });
+    }
   }
 
   private put(event: Event): void {
@@ -71,15 +93,15 @@ export default class DevTools extends Vue {
     browser.storage.local.set({ [Storage.INVEST_STATS]: JSON.parse(value) });
   }
 
-  private prepareTextarea(): string {
-    return JSON.stringify(this.investStats);
+  private prepareTextarea(): null | string {
+    return this.investStats ? JSON.stringify(this.investStats) : null;
   }
 
   private prepareDate(v: string): string {
     return moment
       .tz(v, "Europe/Kiev")
       .tz(moment.tz.guess())
-      .format("Y-MM-D hh:mm");
+      .format("Y-MM-DD hh:mm");
   }
 
   private save() {
@@ -87,6 +109,10 @@ export default class DevTools extends Vue {
       type: "application/json;charset=utf-8"
     });
     FileSaver.saveAs(blob, "db.json");
+  }
+
+  private showFullData(item: any) {
+    this.fullData = item;
   }
 }
 </script>
@@ -99,6 +125,35 @@ export default class DevTools extends Vue {
 
 .dark {
   color: white;
+
+  & textarea,
+  & button {
+    color: white;
+    background-color: grey;
+    border: 0;
+  }
+}
+
+button {
+  margin: 0 10px;
+
+  &:first-child,
+  &:last-child {
+    margin: 0;
+  }
+}
+
+form {
+  margin: 10px 0;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  width: 140px;
 }
 </style>
 
@@ -107,12 +162,14 @@ export default class DevTools extends Vue {
   "en": {
     "clear": "Clear",
     "saveDb": "Save database",
-    "dataList": "Data list"
+    "dataList": "Data list",
+    "dropDbConfirm": "Drop db?"
   },
   "ru": {
     "clear": "Очистить",
     "saveDb": "Сохранить базу",
-    "dataList": "Список данных"
+    "dataList": "Список данных",
+    "dropDbConfirm": "Очистить хранилище?"
   }
 }
 </i18n>
