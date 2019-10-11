@@ -23,6 +23,15 @@ async function init(): Promise<any> {
   console.log(stats);
 
   const options = {
+    chart: {
+      type: "arearange",
+      zoomType: "x",
+      scrollablePlotArea: {
+        minWidth: 600,
+        scrollPositionX: 1
+      }
+    },
+
     xAxis: {
       categories: [] as any,
       // Визуальное выделение зоны при наведении
