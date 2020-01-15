@@ -34,24 +34,22 @@ export interface Item {
 }
 
 export function prepareList(items: Item[]): void {
-  items.forEach(
-    (item: Item): void => {
-      const feature = document.querySelector(
-        `.investment-account-list-item-${item.id}`
-      );
-      if (!feature) {
-        return;
-      }
-      const div = document.createElement("div");
-      feature.appendChild(div);
-
-      new Vue({
-        store,
-        render: (h): any =>
-          h(InvestItem, {
-            props: { item }
-          })
-      }).$mount(div);
+  items.forEach((item: Item): void => {
+    const feature = document.querySelector(
+      `.investment-account-list-item-${item.id}`
+    );
+    if (!feature) {
+      return;
     }
-  );
+    const div = document.createElement("div");
+    feature.appendChild(div);
+
+    new Vue({
+      store,
+      render: (h): any =>
+        h(InvestItem, {
+          props: { item }
+        })
+    }).$mount(div);
+  });
 }

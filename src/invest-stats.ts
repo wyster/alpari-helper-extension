@@ -6,15 +6,13 @@ import { browser } from "webextension-polyfill-ts";
 console.log("invest stats script inited");
 
 async function getInvestStats(): Promise<any> {
-  return new Promise(
-    (resolve): void => {
-      browser.storage.local.get(["investStats"]).then(
-        ({ investStats: result }): void => {
-          resolve(result);
-        }
-      );
-    }
-  );
+  return new Promise((resolve): void => {
+    browser.storage.local
+      .get(["investStats"])
+      .then(({ investStats: result }): void => {
+        resolve(result);
+      });
+  });
 }
 
 async function init(): Promise<any> {
@@ -59,12 +57,9 @@ async function init(): Promise<any> {
     }
   );
 
-  options.xAxis.categories = map(
-    stats,
-    (item): string => {
-      return moment(item.date).format("YYYY-MM-DD HH:mm");
-    }
-  );
+  options.xAxis.categories = map(stats, (item): string => {
+    return moment(item.date).format("YYYY-MM-DD HH:mm");
+  });
 
   Highcharts.chart("chart", options as any);
 }

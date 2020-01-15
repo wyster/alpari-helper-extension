@@ -60,7 +60,7 @@ export default class DevTools extends Vue {
   // @todo type
   private investStats: any | null = null;
   private STORAGE = Storage;
-  private theme: string = "";
+  private theme = "";
   private $style: any;
   private fullData: any = "";
 
@@ -104,14 +104,14 @@ export default class DevTools extends Vue {
       .format("Y-MM-DD hh:mm");
   }
 
-  private save() {
+  private save(): void {
     const blob = new Blob([JSON.stringify(this.investStats)], {
       type: "application/json;charset=utf-8"
     });
     FileSaver.saveAs(blob, "db.json");
   }
 
-  private showFullData(item: any) {
+  private showFullData(item: any): void {
     this.fullData = item;
   }
 }

@@ -6,14 +6,12 @@ const send = (window as any).XMLHttpRequest.prototype.send;
 
 function onLoadStateChangeReplacement(this: any, ...args: []): void {
   console.log("onload", args);
-  args.forEach(
-    (e: ProgressEvent): void => {
-      console.log("response", e.target);
-      EventBus.$emit("response", e.target);
-    }
-  );
+  args.forEach((e: ProgressEvent): void => {
+    console.log("response", e.target);
+    EventBus.$emit("response", e.target);
+  });
   if (this._onload) {
-    return this._onload.apply(this, args);
+    return this._onload(...args);
   }
 }
 

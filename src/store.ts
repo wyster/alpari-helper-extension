@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import moment from "moment";
+import { Moment } from "moment-timezone/moment-timezone";
 
 Vue.use(Vuex);
 
@@ -24,16 +25,16 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   getters: {
-    lastRollover({ lastRollover }: RootState) {
+    lastRollover({ lastRollover }: RootState): Moment | null | undefined {
       return lastRollover;
     },
-    nextRollover({ nextRollover }: RootState) {
+    nextRollover({ nextRollover }: RootState): Moment | undefined {
       return nextRollover;
     },
-    initDate({ initDate }: RootState) {
+    initDate({ initDate }: RootState): Moment | undefined {
       return initDate;
     },
-    investStats({ investStats }: RootState) {
+    investStats({ investStats }: RootState): undefined | any {
       return investStats;
     }
   }

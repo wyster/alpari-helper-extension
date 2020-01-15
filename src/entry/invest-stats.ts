@@ -7,15 +7,13 @@ import * as Storage from "@/consts/storage";
 console.log("invest stats script inited");
 
 async function getInvestStats(): Promise<any> {
-  return new Promise(
-    (resolve): void => {
-      browser.storage.local.get([Storage.INVEST_STATS]).then(
-        ({ investStats: result }): void => {
-          resolve(result);
-        }
-      );
-    }
-  );
+  return new Promise((resolve): void => {
+    browser.storage.local
+      .get([Storage.INVEST_STATS])
+      .then(({ investStats: result }): void => {
+        resolve(result);
+      });
+  });
 }
 
 async function init(): Promise<any> {
@@ -104,12 +102,9 @@ async function init(): Promise<any> {
     }
   );
 
-  options.xAxis.categories = map(
-    stats,
-    (item): string => {
-      return moment(item.date).format("YYYY-MM-DD HH:mm");
-    }
-  );
+  options.xAxis.categories = map(stats, (item): string => {
+    return moment(item.date).format("YYYY-MM-DD HH:mm");
+  });
 
   Highcharts.chart("chart", options as any);
 }

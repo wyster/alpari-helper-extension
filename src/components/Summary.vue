@@ -86,7 +86,7 @@ interface AlpariConfig {
   ])
 })
 export default class Summary extends Vue {
-  public show: boolean = true;
+  public show = true;
   public investmentSummary: HTMLElement | null = null;
   private alpariConfig: AlpariConfig | null = null;
   private lastRollover: moment.Moment | undefined | null;
@@ -99,9 +99,11 @@ export default class Summary extends Vue {
     console.log("created");
 
     this.investmentSummary = document.querySelector("#investment-summary");
-    this.alpariConfig = JSON.parse((document.querySelector(
-      ".config"
-    ) as HTMLElement).getAttribute("data-config") as string);
+    this.alpariConfig = JSON.parse(
+      (document.querySelector(".config") as HTMLElement).getAttribute(
+        "data-config"
+      ) as string
+    );
 
     if (this.alpariConfig) {
       this.$i18n.locale = this.alpariConfig.locale;

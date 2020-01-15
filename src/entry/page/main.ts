@@ -74,14 +74,11 @@ if (config !== null) {
   prepareList((config as any).items);
 }
 
-EventBus.$on(
-  "response",
-  (e: XMLHttpRequest): void => {
-    const regExp = new RegExp("investment/list_accounts");
-    if (regExp.exec(e.responseURL) !== null) {
-      prepareList(JSON.parse(e.response).accounts.elements);
-    }
+EventBus.$on("response", (e: XMLHttpRequest): void => {
+  const regExp = new RegExp("investment/list_accounts");
+  if (regExp.exec(e.responseURL) !== null) {
+    prepareList(JSON.parse(e.response).accounts.elements);
   }
-);
+});
 
 export {};

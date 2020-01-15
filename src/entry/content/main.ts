@@ -12,16 +12,14 @@ interface GenericObject {
 let config: GenericObject = {};
 
 function appendScriptSrc(src: string): Promise<any> {
-  return new Promise(
-    (resolve): void => {
-      const script = document.createElement("script");
-      script.setAttribute("type", "text/javascript");
-      script.src = browser.runtime.getURL(src);
-      script.async = true;
-      script.onload = resolve;
-      document.head.appendChild(script);
-    }
-  );
+  return new Promise((resolve): void => {
+    const script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.src = browser.runtime.getURL(src);
+    script.async = true;
+    script.onload = resolve;
+    document.head.appendChild(script);
+  });
 }
 
 appendScriptSrc("page/main.js");
@@ -46,18 +44,16 @@ async function getActiveAccounts(): Promise<any> {
  *
  */
 async function getInvestStats(): Promise<any> {
-  return new Promise(
-    (resolve): void => {
-      browser.storage.local.get([Storage.INVEST_STATS]).then(
-        ({ investStats: result }): void => {
-          if (typeof result === "undefined") {
-            result = [];
-          }
-          resolve(result);
+  return new Promise((resolve): void => {
+    browser.storage.local
+      .get([Storage.INVEST_STATS])
+      .then(({ investStats: result }): void => {
+        if (typeof result === "undefined") {
+          result = [];
         }
-      );
-    }
-  );
+        resolve(result);
+      });
+  });
 }
 
 /**
@@ -116,20 +112,18 @@ window.addEventListener(
           date: moment().format(),
           activeAccounts: await getActiveAccounts()
         };
-        getInvestStats().then(
-          (result): void => {
-            result.push(preparedData);
-            browser.storage.local.set({ [Storage.INVEST_STATS]: result });
-            message.source.postMessage(
-              {
-                source: Source.CONTENT_SCRIPT,
-                command: Command.INVEST_STATS,
-                investStats: result
-              },
-              message.origin
-            );
-          }
-        );
+        getInvestStats().then((result): void => {
+          result.push(preparedData);
+          browser.storage.local.set({ [Storage.INVEST_STATS]: result });
+          message.source.postMessage(
+            {
+              source: Source.CONTENT_SCRIPT,
+              command: Command.INVEST_STATS,
+              investStats: result
+            },
+            message.origin
+          );
+        });
         break;
       case Command.OPEN_INVEST_STATS:
         browser.runtime

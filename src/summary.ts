@@ -26,14 +26,12 @@ function initVueInstance(): void {
 
 function run(): void {
   let timeout: number;
-  const observer = new MutationObserver(
-    (): void => {
-      clearTimeout(timeout);
-      timeout = setTimeout((): void => {
-        initVueInstance();
-      }, 500);
-    }
-  );
+  const observer = new MutationObserver((): void => {
+    clearTimeout(timeout);
+    timeout = setTimeout((): void => {
+      initVueInstance();
+    }, 500);
+  });
 
   const config = { childList: true, subtree: true };
 
