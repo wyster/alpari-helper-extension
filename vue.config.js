@@ -2,21 +2,27 @@
 const WebextensionPlugin = require("webpack-webextension-plugin");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const CopyPlugin = require("copy-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
   filenameHashing: false,
   css: { extract: false },
 
-  configureWebpack: {
-    devtool: "source-map",
-    entry: {
+  configureWebpack: config => {
+    config.devtool = "source-map";
+    config.entry = {
       background: "./src/entry/background.ts",
       "page/main": "./src/entry/page/main.ts",
       "content/main": "./src/entry/content/main.ts",
       "invest-stats": "./src/entry/invest-stats.ts",
       devtools: "./src/entry/devtools.ts",
       "devtools-background": "./src/entry/devtools-background.ts"
-    }
+    };
+
+    // remove the existing ForkTsCheckerWebpackPlugin
+    config.plugins = config.plugins.filter(
+      p => !(p instanceof ForkTsCheckerWebpackPlugin)
+    );
   },
 
   chainWebpack: config => {
