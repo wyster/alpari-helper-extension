@@ -33,18 +33,10 @@ module.exports = {
     config.plugins.delete("preload");
     config.plugins.delete("prefetch");
     if (process.env.NODE_ENV === "production") {
-      config.optimization.minimizer = [
-        new TerserPlugin({
-          terserOptions: {
-            extractComments: false,
-            cache: true,
-            parallel: true,
-            compress: {
-              drop_console: true
-            }
-          }
-        })
-      ];
+      config.optimization.minimizer("terser").tap(args => {
+        args[0].terserOptions.compress.drop_console = true;
+        return args;
+      });
     }
     config.optimization.delete("splitChunks");
     config
