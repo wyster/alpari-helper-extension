@@ -207,7 +207,10 @@ export default class Summary extends Vue {
 
   private formatDate(date: moment.Moment | null | undefined): string | null {
     if (date instanceof moment) {
-      return date.tz(moment.tz.guess()).format("DD.MM.YY HH:mm:ss");
+      return date
+        .clone()
+        .tz(moment.tz.guess())
+        .format("DD.MM.YY HH:mm:ss");
     }
 
     return null;
