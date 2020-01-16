@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/wyster/alpari-helper-extension/compare/v1.3.0...v1.4.0) (2020-01-16)
+
+
+### Features
+
+* formatted columns with dates ([b800b18](https://github.com/wyster/alpari-helper-extension/commit/b800b18958eb2ff1ae19e2d2bd2354ef4481acdd))
+* removed tslint ([d252ecd](https://github.com/wyster/alpari-helper-extension/commit/d252ecd8a011214e76f85503267ca88227c01795))
+* диапазон для графика ([da4ce37](https://github.com/wyster/alpari-helper-extension/commit/da4ce37cdc2e1b91a669d5bbdd7d722586f461e3))
+
+
+### Bug Fixes
+
+* tsconfig is need ([4379fe7](https://github.com/wyster/alpari-helper-extension/commit/4379fe73a8b6c70cf27bf24e365edd424eb2b0cf))
+
 ## [1.3.0](https://github.com/wyster/alpari-helper-extension/compare/v1.2.0...v1.3.0) (2019-05-28)
 
 
