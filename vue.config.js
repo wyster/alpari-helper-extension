@@ -3,9 +3,11 @@ const WebextensionPlugin = require("webpack-webextension-plugin");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const CopyPlugin = require("copy-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const FileManagerPlugin = require('filemanager-webpack-plugin');
+const FileManagerPlugin = require("filemanager-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
+  productionSourceMap: false,
   filenameHashing: false,
   css: { extract: false },
 
@@ -19,8 +21,6 @@ module.exports = {
       devtools: "./src/entry/devtools.ts",
       "devtools-background": "./src/entry/devtools-background.ts"
     };
-    config.output.filename = '[name].js'
-    config.output.chunkFilename = '[name].js'
 
     // remove the existing ForkTsCheckerWebpackPlugin
     config.plugins = config.plugins.filter(
@@ -29,11 +29,22 @@ module.exports = {
   },
 
   chainWebpack: config => {
+    config.plugins.delete("html");
+    config.plugins.delete("preload");
+    config.plugins.delete("prefetch");
     if (process.env.NODE_ENV === "production") {
-      config
-        .mode("production")
-        .output.filename("[name].js")
-        .chunkFilename("[name].js");
+      config.optimization.minimizer = [
+        new TerserPlugin({
+          terserOptions: {
+            extractComments: false,
+            cache: true,
+            parallel: true,
+            compress: {
+              drop_console: true
+            }
+          }
+        })
+      ];
     }
     config.optimization.delete("splitChunks");
     config
@@ -51,13 +62,13 @@ module.exports = {
     ]);
 
     if (process.env.NODE_ENV === "production") {
-      config.plugin("fileManager").use(FileManagerPlugin, [{
-        onEnd: {
-          archive: [
-            {source: './dist', destination: './dist/dist.zip'}
-          ]
+      config.plugin("fileManager").use(FileManagerPlugin, [
+        {
+          onEnd: {
+            archive: [{ source: "./dist", destination: "./dist/dist.zip" }]
+          }
         }
-      }]);
+      ]);
     }
   },
 

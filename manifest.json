@@ -8,7 +8,7 @@
   "content_scripts": [
     {
       "js": [
-        "content/main.js"
+        "js/content/main.js"
       ],
       "matches": [
         "*://my.alpari.com/*/investments/pamm_accounts/*"
@@ -19,7 +19,7 @@
   "background": {
     "persistent": false,
     "scripts": [
-      "background.js"
+      "js/background.js"
     ]
   },
   "web_accessible_resources": [
