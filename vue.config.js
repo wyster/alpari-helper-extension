@@ -3,6 +3,7 @@ const WebextensionPlugin = require("webpack-webextension-plugin");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const CopyPlugin = require("copy-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const FileManagerPlugin = require('filemanager-webpack-plugin');
 
 module.exports = {
   filenameHashing: false,
@@ -18,6 +19,8 @@ module.exports = {
       devtools: "./src/entry/devtools.ts",
       "devtools-background": "./src/entry/devtools-background.ts"
     };
+    config.output.filename = '[name].js'
+    config.output.chunkFilename = '[name].js'
 
     // remove the existing ForkTsCheckerWebpackPlugin
     config.plugins = config.plugins.filter(
@@ -46,6 +49,16 @@ module.exports = {
         }
       ]
     ]);
+
+    if (process.env.NODE_ENV === "production") {
+      config.plugin("fileManager").use(FileManagerPlugin, [{
+        onEnd: {
+          archive: [
+            {source: './dist', destination: './dist/dist.zip'}
+          ]
+        }
+      }]);
+    }
   },
 
   pluginOptions: {
