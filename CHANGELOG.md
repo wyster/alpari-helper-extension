@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/wyster/alpari-helper-extension/compare/v1.4.0...v1.4.1) (2020-01-16)
+
+
+### Bug Fixes
+
+* infinite loop ([71acd65](https://github.com/wyster/alpari-helper-extension/commit/71acd659a87bcf6201351ecad62965aaee3d49dd))
+
 ## [1.4.0](https://github.com/wyster/alpari-helper-extension/compare/v1.3.0...v1.4.0) (2020-01-16)
 
 
