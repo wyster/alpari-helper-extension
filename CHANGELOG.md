@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/wyster/alpari-helper-extension/compare/v1.4.2...v1.5.0) (2020-04-11)
+
+
+### Features
+
+* added xhook for requests monitoring ([67c5177](https://github.com/wyster/alpari-helper-extension/commit/67c51773e2a64d171948a21ca1a6bf2fc096e06e))
+* added xhook for requests monitoring, part 2 ([78d3695](https://github.com/wyster/alpari-helper-extension/commit/78d3695817222b18b2c1abe32b4444de6ff4c26e))
+* node version ([03655c4](https://github.com/wyster/alpari-helper-extension/commit/03655c40cc6aa7b85ab4db6d463bfbefc0881293))
+
 ### [1.4.2](https://github.com/wyster/alpari-helper-extension/compare/v1.4.1...v1.4.2) (2020-01-16)
 
 ### [1.4.1](https://github.com/wyster/alpari-helper-extension/compare/v1.4.0...v1.4.1) (2020-01-16)
