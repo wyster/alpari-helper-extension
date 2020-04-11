@@ -29,5 +29,9 @@
     "storage",
     "tabs"
   ],
-  "devtools_page": "devtools-background.html"
+  "devtools_page": "devtools-background.html",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png"
+  }
 }

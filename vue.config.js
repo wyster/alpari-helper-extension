@@ -49,6 +49,10 @@ module.exports = {
         },
         {
           from: "./_locales/**/*.json"
+        },
+        {
+          from: "./icons",
+          to: "icons"
         }
       ]
     ]);
