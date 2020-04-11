@@ -164,7 +164,7 @@ export default class Summary extends Vue {
         this.nextRollover.tz(moment.tz.guess())
       )
     ) {
-      alert("У вас уже есть статистика за данный час!");
+      alert("У вас уже есть статистика за данный интервал!");
       this.show = false;
       return;
     }

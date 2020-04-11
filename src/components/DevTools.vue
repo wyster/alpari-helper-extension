@@ -6,24 +6,29 @@
     <button @click="clear(STORAGE.INVEST_STATS)">
       {{ $t("clear") }}
     </button>
-    <div v-if="investStats && investStats.length > 0">
-      {{ $t("dataList") }} ({{ investStats.length }}):
-      <div :class="$style.container">
-        <div
-          v-for="(item, index) in investStats"
-          :key="index"
-          :class="$style.item"
-        >
-          <a href="javascript:;" @click="showFullData(item)">
-            {{ prepareDate(item.date) }}
-          </a>
+    <div v-if="investStats !== null">
+      <template v-if="investStats.length > 0">
+        {{ $t("dataList") }} ({{ investStats.length }}):
+        <div :class="$style.container">
+          <div
+            v-for="(item, index) in investStats"
+            :key="index"
+            :class="$style.item"
+          >
+            <a href="javascript:;" @click="showFullData(item)">
+              {{ prepareDate(item.date) }}
+            </a>
+          </div>
         </div>
-      </div>
-      <textarea
-        v-if="fullData"
-        :class="$style.textarea"
-        v-model="fullData"
-      ></textarea>
+        <textarea
+          v-if="fullData"
+          :class="$style.textarea"
+          v-model="fullData"
+        ></textarea>
+      </template>
+      <template v-if="investStats.length === 0">
+        {{ $t("dbIsEmpty") }}
+      </template>
     </div>
     <div v-else>
       Загрузка данных...
@@ -82,6 +87,7 @@ export default class DevTools extends Vue {
   private clear(): void {
     if (confirm(this.$t("dropDbConfirm"))) {
       browser.storage.local.set({ [Storage.INVEST_STATS]: [] });
+      this.investStats = [];
     }
   }
 
@@ -160,16 +166,18 @@ form {
 <i18n>
 {
   "en": {
-    "clear": "Clear",
-    "saveDb": "Save database",
+    "clear": "Clear database",
+    "saveDb": "Save database to file",
     "dataList": "Data list",
-    "dropDbConfirm": "Drop db?"
+    "dropDbConfirm": "Drop db?",
+    "dbIsEmpty": "Database is empty"
   },
   "ru": {
-    "clear": "Очистить",
-    "saveDb": "Сохранить базу",
+    "clear": "Очистить базу данных",
+    "saveDb": "Сохранить базу данных в файл",
     "dataList": "Список данных",
-    "dropDbConfirm": "Очистить хранилище?"
+    "dropDbConfirm": "Очистить хранилище?",
+    "dbIsEmpty": "База данных пустая"
   }
 }
 </i18n>
