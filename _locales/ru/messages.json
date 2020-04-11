@@ -1,18 +1,11 @@
 {
-  "appName": {
-    "message": "AlpariHelperExtension",
-    "description": ""
+  "name": {
+    "message": "Инвестиционный помощник для Альпари"
   },
-  "appShortName": {
-    "message": "AlpariHelperExtension",
-    "description": ""
+  "shortName": {
+    "message": "Помощник Альпари"
   },
-  "appDescription": {
-    "message": "",
-    "description": "The description of the application"
-  },
-  "browserActionTitle": {
-    "message": "AlpariHelperExtension",
-    "description": ""
+  "description": {
+    "message": "Расширенные возможности анализа инвестиций"
   }
 }

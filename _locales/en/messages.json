@@ -1,0 +1,11 @@
+{
+  "name": {
+    "message": "Investment helper for Alpari"
+  },
+  "shortName": {
+    "message": "Alpari helper"
+  },
+  "description": {
+    "message": "Advanced investment analysis"
+  }
+}
