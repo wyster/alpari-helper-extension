@@ -142,20 +142,6 @@ export default class Summary extends Vue {
       this.show = false;
       return;
     }
-    if (
-      !this.nextRollover
-        .clone()
-        .subtract(1, "hour")
-        .isSame(this.lastRollover)
-    ) {
-      alert(
-        `Пожалуйста обновите страницу, последний ролловер был больше часа назад ${this.formatDate(
-          this.lastRollover
-        )}`
-      );
-      this.show = false;
-      return;
-    }
 
     const getLastSave = (): moment.Moment | null => {
       if (!this.investStats || this.investStats.length === 0) {
@@ -178,7 +164,7 @@ export default class Summary extends Vue {
         this.nextRollover.tz(moment.tz.guess())
       )
     ) {
-      alert("У вас уже есть статистика за текущий час!");
+      alert("У вас уже есть статистика за данный час!");
       this.show = false;
       return;
     }
