@@ -3,6 +3,7 @@
   "version": "1.6.0",
   "private": true,
   "scripts": {
+    "ci": "eslint --ext vue,ts",
     "build": "vue-cli-service build",
     "lint": "eslint --ext vue,ts",
     "build:dev": "npm run build -- --mode=development",
