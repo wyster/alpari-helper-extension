@@ -1,11 +1,21 @@
 <template>
   <div :class="theme">
-    <button @click="save()">
+    <button
+      @click="save()"
+      v-if="investStats !== null && investStats.length > 0"
+    >
       {{ $t("saveDb") }}
     </button>
-    <button @click="clear(STORAGE.INVEST_STATS)">
+    <button
+      @click="clear(STORAGE.INVEST_STATS)"
+      v-if="investStats !== null && investStats.length > 0"
+    >
       {{ $t("clear") }}
     </button>
+    <label v-if="investStats !== null && investStats.length === 0">
+      Upload dump
+      <input type="file" accept="application/json" @change="readFile" />
+    </label>
     <div v-if="investStats !== null">
       <template v-if="investStats.length > 0">
         {{ $t("dataList") }} ({{ investStats.length }}):
@@ -33,12 +43,6 @@
     <div v-else>
       Загрузка данных...
     </div>
-    <!--<textarea v-if="prepareTextarea() !== null" :class="$style.textarea" v-text="prepareTextarea()"></textarea>-->
-    <!--<form @submit="put($event)">
-      <textarea :class="$style.textarea" name="data"></textarea>
-      <br />
-      <input type="submit" />
-    </form>-->
   </div>
 </template>
 
@@ -70,10 +74,9 @@ export default class DevTools extends Vue {
   private fullData: any = "";
 
   private async created(): Promise<any> {
-    console.log("created");
-
     getInvestStats().then(result => {
       this.investStats = result;
+      console.log(this.investStats);
     });
 
     if (typeof browser.devtools !== "undefined") {
@@ -89,14 +92,6 @@ export default class DevTools extends Vue {
       browser.storage.local.set({ [Storage.INVEST_STATS]: [] });
       this.investStats = [];
     }
-  }
-
-  private put(event: Event): void {
-    event.preventDefault();
-    const value = new FormData(event.target as HTMLFormElement).get(
-      "data"
-    ) as string;
-    browser.storage.local.set({ [Storage.INVEST_STATS]: JSON.parse(value) });
   }
 
   private prepareTextarea(): null | string {
@@ -120,6 +115,20 @@ export default class DevTools extends Vue {
   private showFullData(item: any): void {
     this.fullData = item;
   }
+
+  private readFile(e: Event): void {
+    const input = e.target as HTMLFormElement;
+    input.remove();
+    const reader = new FileReader();
+    reader.onload = () => {
+      const data = JSON.parse(reader.result as string);
+      browser.storage.local.set({
+        [Storage.INVEST_STATS]: data
+      });
+      this.investStats = data;
+    };
+    reader.readAsText(input.files[0]);
+  }
 }
 </script>
 
@@ -132,15 +141,21 @@ export default class DevTools extends Vue {
 .dark {
   color: white;
 
-  & textarea,
-  & button {
+  textarea,
+  button,
+  input[type="file"] {
     color: white;
     background-color: grey;
     border: 0;
   }
+
+  a {
+    color: white;
+  }
 }
 
-button {
+button,
+input[type="file"] {
   margin: 0 10px;
 
   &:first-child,
@@ -164,20 +179,20 @@ form {
 </style>
 
 <i18n>
-{
+  {
   "en": {
-    "clear": "Clear database",
-    "saveDb": "Save database to file",
-    "dataList": "Data list",
-    "dropDbConfirm": "Drop db?",
-    "dbIsEmpty": "Database is empty"
+  "clear": "Clear database",
+  "saveDb": "Save database to file",
+  "dataList": "Data list",
+  "dropDbConfirm": "Drop db?",
+  "dbIsEmpty": "Database is empty"
   },
   "ru": {
-    "clear": "Очистить базу данных",
-    "saveDb": "Сохранить базу данных в файл",
-    "dataList": "Список данных",
-    "dropDbConfirm": "Очистить хранилище?",
-    "dbIsEmpty": "База данных пустая"
+  "clear": "Очистить базу данных",
+  "saveDb": "Сохранить базу данных в файл",
+  "dataList": "Список данных",
+  "dropDbConfirm": "Очистить хранилище?",
+  "dbIsEmpty": "База данных пустая"
   }
-}
+  }
 </i18n>
