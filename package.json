@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "file-saver": "^2.0.2",
-    "highcharts": "^8.0",
+    "highcharts": "^9.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
