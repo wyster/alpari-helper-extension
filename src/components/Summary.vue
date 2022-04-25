@@ -119,13 +119,6 @@ export default class Summary extends Vue {
       return;
     }
 
-    if (!this.lastRollover) {
-      alert(
-        "Идёт загрузка данных, пожалуйста повторите запрос через несколько секунд!"
-      );
-      return;
-    }
-
     if (!this.nextRollover) {
       alert(
         "Идёт загрузка данных, пожалуйста повторите запрос через несколько секунд!"
